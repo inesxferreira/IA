@@ -1,1 +1,1 @@
-# Projeto Investigação operacional
+# Projeto Inteligência Artificial
