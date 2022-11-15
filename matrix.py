@@ -1,3 +1,4 @@
+import queue
 class Matriz():
     
     #função que imprime o circuito no terminal
@@ -83,24 +84,36 @@ class Matriz():
             custos.append(custo)
         return(custos)
     
-        
-    #nao tá correto
-    def adj(self,arr):
+    #numa dada posição, desde que seja válido, podemos: 
+    #avançar para a esquerda(y-1), para a direita(y+1)
+    #avançar para cima (x-1), para baixo (x+1)
+    #avançar esquerda e cima em simultaneo(y-1 e x-1) - diagonal
+    #avançar direita e cima em simultaneo(y+1 e x-1) - diagonal
+    #avançar esquerda e baixo em simultaneo(y-1 e x+1) - diagonal
+    #avançar direita e baixo em simultaneo(y+1 e x+1) - diagonal
+    def adjentOfPos(self,arr,x_atual,y_atual):
+        list=[]
+        if ([x_atual-1,y_atual]) in self.posicoesValidas(arr): list.append((x_atual-1,y_atual))
+        if ([x_atual+1,y_atual]) in self.posicoesValidas(arr): list.append((x_atual+1,y_atual))
+        if ([x_atual,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual,y_atual-1))
+        if ([x_atual,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual,y_atual+1))
+        if ([x_atual-1,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual-1,y_atual-1))
+        if ([x_atual+1,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual+1,y_atual-1))
+        if ([x_atual-1,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual-1,y_atual+1))
+        if ([x_atual+1,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual+1,y_atual+1))
+        #retorna a lista das posições adjacentes a uma dada cordenada
+        return(list)
+              
+    #retorna um tuplo em que o 1 elem é uma dada posição e o 2 elem é a lista de posicoes válidas adjacentes a essa posição
+    def getListofAdjencencies(self,arr):
         matriz=self.listaToMatriz(arr)
-        sizeLinha=len(matriz[0])# tamanho duma linha
-        sizeColuna = len(matriz)#tamanho de uma coluna
-        lista = self.custoPos()
-        listaA=[]
-        print (sizeLinha)
-        for i in range (sizeColuna):
-            for j in range ( sizeLinha):
-                if (i<sizeLinha): #para a primeira linha - pq o 0%nr == 0
-                    tuplo=[(i,j), (i,j+1), lista[i][j+1]]
-                    print (tuplo)
-                if (i> sizeLinha and i%sizeLinha != 0):#para a partir da segunda linha
-                    tuplo=[(i,j), (i,j+1), lista[i][j+1]]
-                    print (tuplo)
-
+        lista = matriz[0]
+        newAdjs=[]
+        for i in range (len(matriz)): #colunas
+            for j in range (len(lista)): #linhas
+                newAdjs.append([(i,j),self.adjentOfPos(arr,i,j)])
+        print (newAdjs)
+                          
     #imprimeCircuito(arr)
     #print(listaToMatriz(arr))
     #encontraPosicaoInicial(arr)

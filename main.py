@@ -12,8 +12,9 @@ def main():
     matriz = Matriz()
 
     while saida != 0:
-        print("1-Gerar Circuito ")
-        print("2-Representar pista em forma de grafo")
+        print("1 -> Gerar Circuito ")
+        print("2 -> Representar pista em forma de grafo")
+        print ("3 -> Obter caminho mais rápido - algoritmo")
         saida = int(input("introduza a sua opcao-> "))
         if saida == 1:
             matriz.imprimeCircuito(arr)
