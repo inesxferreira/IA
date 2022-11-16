@@ -48,26 +48,6 @@ class Matriz():
         #print (posicoesOk)
         return posicoesOk
 
-    #função que verifica se a proxima posição é adjacente à atual
-    def jogadaAdjacentes(self,x_atual, y_atual, x_prox, y_prox):
-        isOk= False
-        if (x_atual == x_prox): # se a próxima jogada for na mesma linha
-            if (y_prox == y_atual+1 or y_prox == y_atual-1): #posso ir direita ou esquerda
-                isOk= True
-        if (y_atual == y_prox): # se a próxima jogada for na mesma coluna
-            if (x_prox == x_atual+1 or x_prox == x_atual-1): #posso ir descer ou subir
-                isOk=True
-        return isOk
-        
-
-    #função que verifica se a jogada é valida
-    #isto é se a próxima posição não é fora pista e se é adjacente à atual
-    def movimentoJogadorOK(self,x_novo, y_novo, x_velho,y_velho,arr):
-        movimento_Valido=False
-        if [x_novo,y_novo] in self.posicoesValidas(arr) and self.jogadaAdjacentes(x_novo,y_novo,x_velho,y_velho):
-            movimento_Valido=True
-        return movimento_Valido
-        #print (movimento_Valido)
         
     #array 2d que guarda o custo de cada posição
     def custoPos(self,arr):
@@ -112,14 +92,6 @@ class Matriz():
         for i in range (len(matriz)): #colunas
             for j in range (len(lista)): #linhas
                 newAdjs.append([(i,j),self.adjentOfPos(arr,i,j)])
-        print (newAdjs)
-                          
-    #imprimeCircuito(arr)
-    #print(listaToMatriz(arr))
-    #encontraPosicaoInicial(arr)
-    #encontraPosicoesFinais(arr)
-
-    #print(posicoesValidas(arr))
-    #print(movimentoJogadorOK(3,2,3,1))
-    #custoPos()
-    #adj()
+        return(dict(newAdjs))
+    
+    
