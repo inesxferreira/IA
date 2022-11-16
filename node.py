@@ -1,42 +1,40 @@
 
+from matrix import Matriz
 # Classe nodo para definiçao dos nodos
 # cada nodo tem um nome e um id, poderia ter também informação sobre um ob jeto a guardar.....
 class Node():
-    def __init__(self, name, id=-1,vel=0,a=0):     #  construtor do nodo....."
-        self.m_id = id
-        self.m_name = str(name)
-        self.m_vel= vel
-        self.m_acel=a
+    def __init__(self,name,x,y,custo=1):     #  construtor do nodo....."
+        self.name= str(name)
+        self.x=x
+        self.y=y
+        self.custo= custo
 
     def __str__(self):
-        return "node " + self.m_name
+        return "node " + self.name
 
     def __repr__(self):
-        return "node " + self.m_name
+        return "node " + self.name
 
-    def setId(self, id):
-        self.m_id = id
+    def setCusto(self, custo):
+        self.custo = custo
     
-    def setVel(self, vel):
-        self.m_vel = vel
+    def setX(self,x):
+        self.x=x
     
-    def setAcel(self, acel):
-        self.m_acel = acel
+    def setY(self,y):
+        self.y=y
+    
+    def getCusto(self):
+        return self.custo
 
-    def getId(self):
-        return self.m_id
-
-    def getName(self):
-        return self.m_name
+    def getX(self):
+        return self.x
     
-    def getVel(self):
-        return self.m_vel
-    
-    def getAcel(self):
-        return self.m_acel
+    def getY(self):
+        return self.y
 
     def __eq__(self, other):
-        return self.m_name == other.m_name  # são iguais se nome igual, não usa o id
+        return self.name == other.name
 
     def __hash__(self):
-        return hash(self.m_name)
+        return hash(self.name)

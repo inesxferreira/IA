@@ -13,7 +13,17 @@ class Matriz():
         #print (x)
         return [[instance for instance in sublist if not instance.isspace()] for sublist in x] #remove os espaços em branco da matriz
 
-
+    #função que retorna os indices da matriz
+    def returnPositionsOfMatrix(self,arr):
+        matriz=self.listaToMatriz(arr)
+        lista= matriz[0]# primeira linha da matriz-- precisamos dela para saber o tamanho da linha
+        #print (lista)
+        finais =[]
+        for i in range (len(matriz)): #colunas
+            for j in range (len(lista)): #linhas
+                finais.append([i,j])
+        return finais
+    
     #funcao que retorna as coordenadas da posicao inicial
     def encontraPosicaoInicial(self,arr):
         inicio =()
@@ -34,20 +44,6 @@ class Matriz():
             for j in range (len(lista)): #linhas
                 if (matriz[i][j] == 'F'): finais.append([i,j])
         return finais
-
-
-    #função que retorna uma lista com os indices das posicoes da matriz para onde o jogador se pode movimentar (todas menos 'X') -- ele pode andar por 'P', '-' e 'F'
-    def posicoesValidas(self,arr):
-        matriz=self.listaToMatriz(arr)
-        lista= matriz[0]# primeira linha da matriz-- precisamos dela para saber o tamanho da linha
-        #print (lista)
-        posicoesOk =[]
-        for i in range (len(matriz)): #colunas
-            for j in range (len(lista)): #linhas
-                if (matriz[i][j] != 'X'): posicoesOk.append([i,j])
-        #print (posicoesOk)
-        return posicoesOk
-
         
     #array 2d que guarda o custo de cada posição
     def custoPos(self,arr):
@@ -64,6 +60,11 @@ class Matriz():
             custos.append(custo)
         return(custos)
     
+    #devolve o custo de uma dada posição
+    def returnCustoOfaPos(self,arr,x,y):
+        list=self.custoPos
+        return(list[x][y])
+    
     #numa dada posição, desde que seja válido, podemos: 
     #avançar para a esquerda(y-1), para a direita(y+1)
     #avançar para cima (x-1), para baixo (x+1)
@@ -73,14 +74,14 @@ class Matriz():
     #avançar direita e baixo em simultaneo(y+1 e x+1) - diagonal
     def adjentOfPos(self,arr,x_atual,y_atual):
         list=[]
-        if ([x_atual-1,y_atual]) in self.posicoesValidas(arr): list.append((x_atual-1,y_atual))
-        if ([x_atual+1,y_atual]) in self.posicoesValidas(arr): list.append((x_atual+1,y_atual))
-        if ([x_atual,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual,y_atual-1))
-        if ([x_atual,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual,y_atual+1))
-        if ([x_atual-1,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual-1,y_atual-1))
-        if ([x_atual+1,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual+1,y_atual-1))
-        if ([x_atual-1,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual-1,y_atual+1))
-        if ([x_atual+1,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual+1,y_atual+1))
+        if ([x_atual-1,y_atual]) in self.returnPositionsOfMatrix(arr): list.append((x_atual-1,y_atual))
+        if ([x_atual+1,y_atual]) in self.returnPositionsOfMatrix(arr): list.append((x_atual+1,y_atual))
+        if ([x_atual,y_atual-1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual,y_atual-1))
+        if ([x_atual,y_atual+1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual,y_atual+1))
+        if ([x_atual-1,y_atual-1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual-1,y_atual-1))
+        if ([x_atual+1,y_atual-1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual+1,y_atual-1))
+        if ([x_atual-1,y_atual+1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual-1,y_atual+1))
+        if ([x_atual+1,y_atual+1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual+1,y_atual+1))
         #retorna a lista das posições adjacentes a uma dada cordenada
         return(list)
               
