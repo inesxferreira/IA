@@ -61,9 +61,23 @@ class Matriz():
         return(custos)
     
     #devolve o custo de uma dada posição
-    def returnCustoOfaPos(self,arr,x,y):
-        list=self.custoPos
+    def returnCustoOfaPos(self,arr,v):
+        x= int(v[0])
+        y= int(v[1])
+        list=self.custoPos(arr)
         return(list[x][y])
+    
+    #pista
+    def posicoesValidas(self,arr):
+        matriz=self.listaToMatriz(arr)
+        lista= matriz[0]# primeira linha da matriz-- precisamos dela para saber o tamanho da linha
+        #print (lista)
+        posicoesOk =[]
+        for i in range (len(matriz)): #colunas
+            for j in range (len(lista)): #linhas
+                if (matriz[i][j] != 'X'): posicoesOk.append([i,j])
+        #print (posicoesOk)
+        return posicoesOk
     
     #numa dada posição, desde que seja válido, podemos: 
     #avançar para a esquerda(y-1), para a direita(y+1)
@@ -74,14 +88,14 @@ class Matriz():
     #avançar direita e baixo em simultaneo(y+1 e x+1) - diagonal
     def adjentOfPos(self,arr,x_atual,y_atual):
         list=[]
-        if ([x_atual-1,y_atual]) in self.returnPositionsOfMatrix(arr): list.append((x_atual-1,y_atual))
-        if ([x_atual+1,y_atual]) in self.returnPositionsOfMatrix(arr): list.append((x_atual+1,y_atual))
-        if ([x_atual,y_atual-1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual,y_atual-1))
-        if ([x_atual,y_atual+1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual,y_atual+1))
-        if ([x_atual-1,y_atual-1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual-1,y_atual-1))
-        if ([x_atual+1,y_atual-1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual+1,y_atual-1))
-        if ([x_atual-1,y_atual+1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual-1,y_atual+1))
-        if ([x_atual+1,y_atual+1]) in self.returnPositionsOfMatrix(arr):list.append((x_atual+1,y_atual+1))
+        if ([x_atual-1,y_atual]) in self.posicoesValidas(arr): list.append((x_atual-1,y_atual))
+        if ([x_atual+1,y_atual]) in self.posicoesValidas(arr): list.append((x_atual+1,y_atual))
+        if ([x_atual,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual,y_atual-1))
+        if ([x_atual,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual,y_atual+1))
+        if ([x_atual-1,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual-1,y_atual-1))
+        if ([x_atual+1,y_atual-1]) in self.posicoesValidas(arr):list.append((x_atual+1,y_atual-1))
+        if ([x_atual-1,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual-1,y_atual+1))
+        if ([x_atual+1,y_atual+1]) in self.posicoesValidas(arr):list.append((x_atual+1,y_atual+1))
         #retorna a lista das posições adjacentes a uma dada cordenada
         return(list)
               
@@ -92,7 +106,8 @@ class Matriz():
         newAdjs=[]
         for i in range (len(matriz)): #colunas
             for j in range (len(lista)): #linhas
-                newAdjs.append([(i,j),self.adjentOfPos(arr,i,j)])
+                if (matriz[i][j]!= 'X'):
+                    newAdjs.append([(i,j),self.adjentOfPos(arr,i,j)])
         return(dict(newAdjs))
     
     

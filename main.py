@@ -1,6 +1,7 @@
 from matrix import Matriz
 from graph import Grafo
 from node import Node
+from arestas import Arestas
 
 def main():
     #leitura e representação do circuito do ficheiro txt
@@ -12,8 +13,7 @@ def main():
         
     saida = -1
     matriz = Matriz()
-    grafo = Grafo()
-    nodo = Node()
+    arestas = Arestas()
 
     while saida != 0:
         print("1 -> Gerar Circuito ")
@@ -22,9 +22,8 @@ def main():
         saida = int(input("introduza a sua opcao-> "))
         if saida == 1:
             matriz.imprimeCircuito(arr)
-            #print(matriz.returnPositionsOfMatrix(arr)) 
-        #if saida == 2:
-            #print(grafo.getNodes) 
+        if saida == 2:
+             arestas.dictToGraph(arr)
         else:
             print("não introduziu nada")
             l = input("prima enter para continuar") 
