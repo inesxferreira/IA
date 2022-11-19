@@ -1,6 +1,4 @@
 from matrix import Matriz
-from graph import Grafo
-from node import Node
 from arestas import Arestas
 
 def main():
