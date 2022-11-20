@@ -32,7 +32,7 @@ class Matriz():
         for i in range (len(matriz)): #colunas
             for j in range (len(lista)): #linhas
                 if (matriz[i][j] == 'P'): inicio=(i,j)
-        return (inicio)
+        return inicio
 
     #funcao que retorna as coordenadas das possíveis metas
     def encontraPosicoesFinais (self,arr):
@@ -42,7 +42,7 @@ class Matriz():
         finais =[]
         for i in range (len(matriz)): #colunas
             for j in range (len(lista)): #linhas
-                if (matriz[i][j] == 'F'): finais.append([i,j])
+                if (matriz[i][j] == 'F'): finais.append((i,j))
         return finais
         
     #array 2d que guarda o custo de cada posição
@@ -78,6 +78,8 @@ class Matriz():
                 if (matriz[i][j] != 'X'): posicoesOk.append([i,j])
         #print (posicoesOk)
         return posicoesOk
+    
+    
     
     #numa dada posição, desde que seja válido, podemos: 
     #avançar para a esquerda(y-1), para a direita(y+1)
