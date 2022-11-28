@@ -1,6 +1,5 @@
 from matrix import Matriz
 from arestas import Arestas
-from grafo import Grafo
 from newgrafo import Nodo
 from newgrafo import oGrafo
 
