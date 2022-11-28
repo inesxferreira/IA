@@ -11,8 +11,7 @@ class Arestas():
     
     # adiciona uma aresta ao grafo
     l = defaultdict(list)
-    weights = {}
-    
+    weights = {} 
     
     def addEdge(self,arr,l,u,v):
         matriz = Matriz()
