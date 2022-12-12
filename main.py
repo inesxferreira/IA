@@ -22,6 +22,9 @@ def main():
         print("1 -> Gerar Circuito ")
         print("2 -> Representar pista em forma de grafo")
         print("3 -> Obter o menor caminho - Problema de Custo Uniforme")
+        print("4 -> Algoritmo Greedy")
+        print("0 -> Sair")
+
         saida = int(input("Introduza a sua opção-> "))
         if saida == 1:
             matriz.imprimeCircuito(arr)
@@ -40,8 +43,25 @@ def main():
             newi=il+ic
             grafito=oGrafo(edges,tamanho)
             grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho)
-      
-   
+        
+        if saida == 4:
+            n = matriz.returnPositionsOfMatrix(arr)
+            tamanho = len(n)
+            edges= arestas.turnTupleintoNumber(arr)
+            grafito = oGrafo(edges,tamanho)
+            inicio = matriz.encontraPosicaoInicial(arr)
+            #fins = matriz.encontraPosicoesFinais(arr)
+            fins = (2,9)
+
+            caminho = grafito.greedy(arr,matriz,inicio,fins)
+            print(caminho)
+
+            custo = grafito.calcula_custo(matriz,caminho)
+
+           
+
+
+
 if __name__ == "__main__":
     main() 
     

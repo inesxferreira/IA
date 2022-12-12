@@ -69,6 +69,4 @@ class Arestas():
             newf=fl+fc
             add=(int(newi),int(newf),custo)
             newlist.append(add)
-        return newlist
-
-            
+        return newlist 
