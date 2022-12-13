@@ -181,7 +181,7 @@ class oGrafo:
 
            ####### if n in self.keys():
                 # para todos os vizinhos  do nodo atual 
-                    for m in matriz.adjentOfPos(arr,n[0],n[1]): #vai buscar os adjacentes da posição à matriz
+                for m in matriz.adjentOfPos(arr,n[0],n[1]): #vai buscar os adjacentes da posição à matriz
                         # Se o nodo corrente nao esta na open nem na closed list
                         # adiciona-lo à open_list e marcar o antecessor
                             if m not in open_list and m not in closed_list:

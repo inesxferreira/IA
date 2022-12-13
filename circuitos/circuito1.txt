@@ -1,0 +1,9 @@
+X X X X X X X X X X
+X X X X X X X X X X
+X X - - P - - - - X
+X - - - - - - - - F
+X X - - - - - - - F
+X - - - - - - - - F
+X - - - F - - - - X
+X X X X X X X X X X
+X X X X X X X X X X

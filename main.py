@@ -2,16 +2,38 @@ from matrix import Matriz
 from arestas import Arestas
 from newgrafo import Nodo
 from newgrafo import oGrafo
+from custoUniforme import Nodo
+from custoUniforme import CustoUniforme
+from bfs import pesquisaBFS
 
 
         
 def main():
     #leitura e representação do circuito do ficheiro txt
-    file = open ('circuito.txt', 'r')
-    leitura = file.readlines()
+    file1 = open ('./circuitos/circuito.txt', 'r')
+    file2 = open ('./circuitos/circuito1.txt', 'r')
+    file3 = open ('./circuitos/circuito2.txt', 'r')
+    file4 = open ('./circuitos/circuito3.txt', 'r')
+    leitura = file1.readlines()
+    leitura1 = file2.readlines()
+    leitura2 = file3.readlines()
+    leitura3 = file4.readlines()
+    
     arr=[]
     for line in leitura:
         arr.append(line.strip()) # para remover o \n
+    
+    arr1=[]
+    for line in leitura1:
+        arr1.append(line.strip()) # para remover o \n
+    
+    arr2=[]
+    for line in leitura2:
+        arr2.append(line.strip()) # para remover o \n
+    
+    arr3=[]
+    for line in leitura3:
+        arr3.append(line.strip()) # para remover o \n
         
     saida = -1
     matriz = Matriz()
@@ -19,44 +41,206 @@ def main():
 
     
     while saida != 0:
-        print("1 -> Gerar Circuito ")
-        print("2 -> Representar pista em forma de grafo")
-        print("3 -> Obter o menor caminho - Problema de Custo Uniforme")
-        print("4 -> Algoritmo Greedy")
-        print("0 -> Sair")
-
-        saida = int(input("Introduza a sua opção-> "))
+        print (" ########## BEM VINDO AO VECTOR RACE  ##########")
+        print ("Comece por selecionar um circuito de entre os circuitos disponiveis")
+        print("1 ->  Circuito 1 ")
+        print("2 ->  Circuito 2" )
+        print("3 ->  Circuito 3 ")
+        print("3 ->  Circuito 4 ")
+        print("0 -> Sair do Programa")
+        print (" ###############################################")
+        saida = int(input("Escolha o circuito que pretende-> "))
         if saida == 1:
-            matriz.imprimeCircuito(arr)
+            saida2= -1
+            while saida2 !=0:
+                print("########## SELECIONOU O CIRCUITO 1  ##########" )
+                print("1 -> Gerar o Circuito ")
+                print("2 -> Representar a pista em forma de grafo")
+                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
+                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("0 ->  Voltar ao menu")
+                print("##############################################" )
+                saida2 = int(input("Introduza a sua opção-> "))
+                if saida2 == 1:
+                         matriz.imprimeCircuito(arr)
+                if saida2 == 2:
+                        l= arestas.getEdges(arr)
+                        [print(i) for i in l]   
+                if saida2 == 3:
+                        n= matriz.returnPositionsOfMatrix(arr)
+                        tamanho =  len(n)
+                        edges= arestas.turnTupleintoNumber(arr)
+                        inicio = matriz.encontraPosicaoInicial(arr) 
+                        fins = matriz.finalsPositionsIntoIntegers(arr)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        grafito=CustoUniforme(edges,tamanho*tamanho)
+                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
+                if saida2 == 4:
+                        n= matriz.returnPositionsOfMatrix(arr)
+                        tamanho = len(n)
+                        edges= arestas.turnTupleintoNumber(arr)
+                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
+                        inicio = matriz.encontraPosicaoInicial(arr)
+                        fins = matriz.finalsPositionsIntoIntegers(arr)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        list =[]
+                        for i in fins: 
+                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
+                        menor = tamanho*tamanho
+                        dest = 0
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
+                
         if saida == 2:
-            l= arestas.getEdges(arr)
-            [print(i) for i in l]
+            saida2= -1
+            while saida2 !=0:
+                print("########## SELECIONOU O CIRCUITO 2  ##########" )
+                print("1 -> Gerar o Circuito ")
+                print("2 -> Representar a pista em forma de grafo")
+                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
+                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("0 ->  Voltar ao menu")
+                print("##############################################" )
+                saida2 = int(input("Introduza a sua opção-> "))
+                if saida2 == 1:
+                         matriz.imprimeCircuito(arr1)
+                if saida2 == 2:
+                        l= arestas.getEdges(arr1)
+                        [print(i) for i in l]   
+                if saida2 == 3:
+                        n= matriz.returnPositionsOfMatrix(arr1)
+                        tamanho =  len(n)
+                        edges= arestas.turnTupleintoNumber(arr1)
+                        inicio = matriz.encontraPosicaoInicial(arr1) 
+                        fins = matriz.finalsPositionsIntoIntegers(arr1)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        grafito=CustoUniforme(edges,tamanho*tamanho)
+                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
+                if saida2 == 4:
+                        n= matriz.returnPositionsOfMatrix(arr1)
+                        tamanho = len(n)
+                        edges= arestas.turnTupleintoNumber(arr1)
+                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
+                        inicio = matriz.encontraPosicaoInicial(arr1)
+                        fins = matriz.finalsPositionsIntoIntegers(arr1)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        list =[]
+                        for i in fins:
+                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
+                        menor = tamanho*tamanho
+                        dest = 0
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
         if saida == 3:
-            n= matriz.returnPositionsOfMatrix(arr)
-            tamanho = len(n)
-            edges= arestas.turnTupleintoNumber(arr)
-            grafito = oGrafo(edges,tamanho)
-            inicio = matriz.encontraPosicaoInicial(arr) 
-            fins = matriz.finalsPositionsIntoIntegers(arr)
-            il=str(inicio[0])
-            ic=str(inicio[1])
-            newi=il+ic
-            grafito=oGrafo(edges,tamanho)
-            grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho)
-        
+            saida2= -1
+            while saida2 !=0:
+                print("########## SELECIONOU O CIRCUITO 3  ##########" )
+                print("1 -> Gerar o Circuito ")
+                print("2 -> Representar a pista em forma de grafo")
+                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
+                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("0 ->  Voltar ao menu")
+                print("##############################################" )
+                saida2 = int(input("Introduza a sua opção-> "))
+                if saida2 == 1:
+                         matriz.imprimeCircuito(arr2)
+                if saida2 == 2:
+                        l= arestas.getEdges(arr2)
+                        [print(i) for i in l]   
+                if saida2 == 3:
+                        n= matriz.returnPositionsOfMatrix(arr2)
+                        tamanho =  len(n)
+                        edges= arestas.turnTupleintoNumber(arr2)
+                        inicio = matriz.encontraPosicaoInicial(arr2) 
+                        fins = matriz.finalsPositionsIntoIntegers(arr2)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        grafito=CustoUniforme(edges,tamanho*tamanho)
+                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
+                if saida2 == 4:
+                        n= matriz.returnPositionsOfMatrix(arr2)
+                        tamanho = len(n)
+                        edges= arestas.turnTupleintoNumber(arr2)
+                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
+                        inicio = matriz.encontraPosicaoInicial(arr2)
+                        fins = matriz.finalsPositionsIntoIntegers(arr2)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        list =[]
+                        for i in fins:
+                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
+                        menor = tamanho*tamanho
+                        dest = 0
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
+                
         if saida == 4:
-            n = matriz.returnPositionsOfMatrix(arr)
-            tamanho = len(n)
-            edges= arestas.turnTupleintoNumber(arr)
-            grafito = oGrafo(edges,tamanho)
-            inicio = matriz.encontraPosicaoInicial(arr)
-            #fins = matriz.encontraPosicoesFinais(arr)
-            fins = (2,9)
-
-            caminho = grafito.greedy(arr,matriz,inicio,fins)
-            print(caminho)
-
-            custo = grafito.calcula_custo(matriz,caminho)
+            saida2= -1
+            while saida2 !=0:
+                print("########## SELECIONOU O CIRCUITO 4  ##########" )
+                print("1 -> Gerar o Circuito ")
+                print("2 -> Representar a pista em forma de grafo")
+                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
+                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("0 ->  Voltar ao menu")
+                print("##############################################" )
+                saida2 = int(input("Introduza a sua opção-> "))
+                if saida2 == 1:
+                         matriz.imprimeCircuito(arr3)
+                if saida2 == 2:
+                        l= arestas.getEdges(arr3)
+                        [print(i) for i in l]   
+                if saida2 == 3:
+                        n= matriz.returnPositionsOfMatrix(arr3)
+                        tamanho =  len(n)
+                        edges= arestas.turnTupleintoNumber(arr3)
+                        inicio = matriz.encontraPosicaoInicial(arr3) 
+                        fins = matriz.finalsPositionsIntoIntegers(arr3)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        grafito=CustoUniforme(edges,tamanho*tamanho)
+                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
+                if saida2 == 4:
+                        n= matriz.returnPositionsOfMatrix(arr3)
+                        tamanho = len(n)
+                        edges= arestas.turnTupleintoNumber(arr3)
+                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
+                        inicio = matriz.encontraPosicaoInicial(arr3)
+                        fins = matriz.finalsPositionsIntoIntegers(arr3)
+                        il=str(inicio[0])
+                        ic=str(inicio[1])
+                        newi=il+ic
+                        list =[]
+                        for i in fins:
+                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
+                        menor = tamanho*tamanho
+                        dest = 0
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
+   
 
            
 
