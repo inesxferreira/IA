@@ -1,4 +1,3 @@
-from os import nice
 from matrix import Matriz
 from collections import defaultdict
 from arestas import Arestas
@@ -7,6 +6,7 @@ import sys #sys.maxsize reports the platform's pointer size
 from heapq import heappop, heappush
 from collections import deque
 import math
+from dictionary import Dictionary
 
 
 #Classe que guarda os Nodos da Heap
@@ -95,13 +95,7 @@ class oGrafo:
             i = i + 1
         return custo
 
-    #cálculo da distância em linha reta da posição atual à posição final
-    def distanciaEuclidiana(self, pAt, pFi):
-        differences = [pAt[x] - pFi[x] for x in range(len(pAt))]
-        differences_squared = [difference ** 2 for difference in differences]
-        sum_of_squares = sum(differences_squared)
-        return sum_of_squares ** 0.5
-
+    
     #dado a posição atual do jogador, verifica quais as próximas posições possíveis
     def verificaProxPos(self, arr, matriz,posAt, posF):
         velJogador = (0, 0) #velocidade inicial é 0 
@@ -137,61 +131,3 @@ class oGrafo:
         return menorPos
 
 
-    # aplica o algoritmo Greedy no grafo fornecido
-    def greedy(self, arr, matriz,inicio, fim):
-        # open_list é uma lista de nodos visitados, mas com vizinhos
-        # que ainda não foram todos visitados, começa com o  inicio
-        # closed_list é uma lista de nodos visitados
-        # e todos os seus vizinhos também já o foram
-        open_list = set([inicio])
-        closed_list = set([])
-
-        # parents é um dicionário que mantém o antecessor de um nodo
-        # começa com inicio
-        parents = {}
-        parents[inicio] = inicio
-
-        while len(open_list) > 0:
-            n = None
-
-            # encontrar nodo com a menor heuristica
-            for i in open_list:
-
-                n = self.verificaProxPos(arr,matriz,i,fim)
-
-            if n == None:
-                print('Path does not exist!')
-                return None
-            # se o nodo corrente é o destino
-            # reconstruir o caminho a partir desse nodo até ao inicio
-            # seguindo o antecessor
-            if n == fim: #if n in fim
-                reconst_path = []
-
-                while parents[n] != n:
-                    reconst_path.append(n)
-                    n = parents[n]
-
-                reconst_path.append(inicio)
-
-                reconst_path.reverse()
-
-                return (reconst_path, self.calcula_custo(matriz,reconst_path))
-
-
-           ####### if n in self.keys():
-                # para todos os vizinhos  do nodo atual 
-                for m in matriz.adjentOfPos(arr,n[0],n[1]): #vai buscar os adjacentes da posição à matriz
-                        # Se o nodo corrente nao esta na open nem na closed list
-                        # adiciona-lo à open_list e marcar o antecessor
-                            if m not in open_list and m not in closed_list:
-                                open_list.add(m)
-                                parents[m] = n
-
-            # remover n da open_list e adiciona-lo à closed_list
-            # porque todos os seus vizinhos foram inspecionados
-            open_list.remove(n)
-            closed_list.add(n)
-
-        print('Path does not exist!')
-        return None
