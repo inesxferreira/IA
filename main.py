@@ -71,15 +71,37 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr)
                         fins = matriz.encontraPosicoesFinais(arr)
                         grafo = Grafo(arr)
-                        fim = fins[1]
-                        caminho =grafo.procura_DFS(inicio,fim)
+                        path =[]
+                        visited = set()
+                        list =[]
+                        for i in fins:
+                            path2 =[]
+                            visited2 = set()
+                            f= grafo.verificaDFSfins(inicio,i,path2,visited2)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_DFS(inicio,dest,path,visited)
                         print(caminho)
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr)
                         fins = matriz.encontraPosicoesFinais(arr)
                         grafo = Grafo(arr)
-                        fim = fins[0]
-                        caminho =grafo.procura_BFS(inicio,fim)
+                        list=[]
+                        for i in fins:
+                            f= grafo.verificaBFSfins(inicio,i)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
                 if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr)
@@ -92,6 +114,9 @@ def main():
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
+                if saida2 == 6:
+                        print(matriz.returnPositionsOfMatrix(arr))
+                        
  
                           
         if saida == 2:
@@ -115,15 +140,37 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr1)
                         fins = matriz.encontraPosicoesFinais(arr1)
                         grafo = Grafo(arr1)
-                        fim = fins[1]
-                        caminho =grafo.procura_DFS(inicio,fim)
+                        path =[]
+                        visited = set()
+                        list =[]
+                        for i in fins:
+                            path2 =[]
+                            visited2 = set()
+                            f= grafo.verificaDFSfins(inicio,i,path2,visited2)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_DFS(inicio,dest,path,visited)
                         print(caminho)
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr1)
                         fins = matriz.encontraPosicoesFinais(arr1)
                         grafo = Grafo(arr1)
-                        fim = fins[0]
-                        caminho =grafo.procura_BFS(inicio,fim)
+                        list=[]
+                        for i in fins:
+                            f= grafo.verificaBFSfins(inicio,i)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
                 if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr1)
@@ -157,15 +204,37 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr2)
                         fins = matriz.encontraPosicoesFinais(arr2)
                         grafo = Grafo(arr2)
-                        fim = fins[1]
-                        caminho =grafo.procura_DFS(inicio,fim)
+                        path =[]
+                        visited = set()
+                        list =[]
+                        for i in fins:
+                            path2 =[]
+                            visited2 = set()
+                            f= grafo.verificaDFSfins(inicio,i,path2,visited2)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_DFS(inicio,dest,path,visited)
                         print(caminho)
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr2)
                         fins = matriz.encontraPosicoesFinais(arr2)
                         grafo = Grafo(arr2)
-                        fim = fins[0]
-                        caminho =grafo.procura_BFS(inicio,fim)
+                        list=[]
+                        for i in fins:
+                            f= grafo.verificaBFSfins(inicio,i)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
                 if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr2)
@@ -200,15 +269,37 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr3)
                         fins = matriz.encontraPosicoesFinais(arr3)
                         grafo = Grafo(arr3)
-                        fim = fins[1]
-                        caminho =grafo.procura_DFS(inicio,fim)
+                        path =[]
+                        visited = set()
+                        list =[]
+                        for i in fins:
+                            path2 =[]
+                            visited2 = set()
+                            f= grafo.verificaDFSfins(inicio,i,path2,visited2)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_DFS(inicio,dest,path,visited)
                         print(caminho)
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr3)
                         fins = matriz.encontraPosicoesFinais(arr3)
                         grafo = Grafo(arr3)
-                        fim = fins[0]
-                        caminho =grafo.procura_BFS(inicio,fim)
+                        list=[]
+                        for i in fins:
+                            f= grafo.verificaBFSfins(inicio,i)
+                            list.append(f)
+                        menor = 10000
+                        dest =(0,0)
+                        for i in list:
+                            if (i[1] < menor): 
+                                dest = i[0]
+                                menor = i[1]
+                        caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
                 if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr3)
