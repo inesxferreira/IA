@@ -4,7 +4,7 @@ from newgrafo import Nodo
 from newgrafo import oGrafo
 from custoUniforme import Nodo
 from custoUniforme import CustoUniforme
-from bfs import pesquisaBFS
+from Grafo import Grafo
 
 
         
@@ -46,7 +46,7 @@ def main():
         print("1 ->  Circuito 1 ")
         print("2 ->  Circuito 2" )
         print("3 ->  Circuito 3 ")
-        print("3 ->  Circuito 4 ")
+        print("4 ->  Circuito 4 ")
         print("0 -> Sair do Programa")
         print (" ###############################################")
         saida = int(input("Escolha o circuito que pretende-> "))
@@ -56,8 +56,9 @@ def main():
                 print("########## SELECIONOU O CIRCUITO 1  ##########" )
                 print("1 -> Gerar o Circuito ")
                 print("2 -> Representar a pista em forma de grafo")
-                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
-                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("3 -> Pesquisa DFS")
+                print("4 -> Pesquisa BFS")
+                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -67,6 +68,20 @@ def main():
                         l= arestas.getEdges(arr)
                         [print(i) for i in l]   
                 if saida2 == 3:
+                        inicio = matriz.encontraPosicaoInicial(arr)
+                        fins = matriz.encontraPosicoesFinais(arr)
+                        grafo = Grafo(arr)
+                        fim = fins[1]
+                        caminho =grafo.procura_DFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 4:
+                        inicio = matriz.encontraPosicaoInicial(arr)
+                        fins = matriz.encontraPosicoesFinais(arr)
+                        grafo = Grafo(arr)
+                        fim = fins[0]
+                        caminho =grafo.procura_BFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr)
                         tamanho =  len(n)
                         edges= arestas.turnTupleintoNumber(arr)
@@ -77,35 +92,17 @@ def main():
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
-                if saida2 == 4:
-                        n= matriz.returnPositionsOfMatrix(arr)
-                        tamanho = len(n)
-                        edges= arestas.turnTupleintoNumber(arr)
-                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
-                        inicio = matriz.encontraPosicaoInicial(arr)
-                        fins = matriz.finalsPositionsIntoIntegers(arr)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        list =[]
-                        for i in fins: 
-                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
-                        menor = tamanho*tamanho
-                        dest = 0
-                        for i in list:
-                            if (i[1] < menor): 
-                                dest = i[0]
-                                menor = i[1]
-                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
-                
+ 
+                          
         if saida == 2:
             saida2= -1
             while saida2 !=0:
                 print("########## SELECIONOU O CIRCUITO 2  ##########" )
                 print("1 -> Gerar o Circuito ")
                 print("2 -> Representar a pista em forma de grafo")
-                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
-                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("3 -> Pesquisa DFS")
+                print("4 -> Pesquisa BFS")
+                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -115,6 +112,20 @@ def main():
                         l= arestas.getEdges(arr1)
                         [print(i) for i in l]   
                 if saida2 == 3:
+                        inicio = matriz.encontraPosicaoInicial(arr1)
+                        fins = matriz.encontraPosicoesFinais(arr1)
+                        grafo = Grafo(arr1)
+                        fim = fins[1]
+                        caminho =grafo.procura_DFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 4:
+                        inicio = matriz.encontraPosicaoInicial(arr1)
+                        fins = matriz.encontraPosicoesFinais(arr1)
+                        grafo = Grafo(arr1)
+                        fim = fins[0]
+                        caminho =grafo.procura_BFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr1)
                         tamanho =  len(n)
                         edges= arestas.turnTupleintoNumber(arr1)
@@ -125,34 +136,15 @@ def main():
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
-                if saida2 == 4:
-                        n= matriz.returnPositionsOfMatrix(arr1)
-                        tamanho = len(n)
-                        edges= arestas.turnTupleintoNumber(arr1)
-                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
-                        inicio = matriz.encontraPosicaoInicial(arr1)
-                        fins = matriz.finalsPositionsIntoIntegers(arr1)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        list =[]
-                        for i in fins:
-                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
-                        menor = tamanho*tamanho
-                        dest = 0
-                        for i in list:
-                            if (i[1] < menor): 
-                                dest = i[0]
-                                menor = i[1]
-                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
         if saida == 3:
             saida2= -1
             while saida2 !=0:
                 print("########## SELECIONOU O CIRCUITO 3  ##########" )
                 print("1 -> Gerar o Circuito ")
                 print("2 -> Representar a pista em forma de grafo")
-                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
-                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("3 -> Pesquisa DFS")
+                print("4 -> Pesquisa BFS")
+                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -162,6 +154,20 @@ def main():
                         l= arestas.getEdges(arr2)
                         [print(i) for i in l]   
                 if saida2 == 3:
+                        inicio = matriz.encontraPosicaoInicial(arr2)
+                        fins = matriz.encontraPosicoesFinais(arr2)
+                        grafo = Grafo(arr2)
+                        fim = fins[1]
+                        caminho =grafo.procura_DFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 4:
+                        inicio = matriz.encontraPosicaoInicial(arr2)
+                        fins = matriz.encontraPosicoesFinais(arr2)
+                        grafo = Grafo(arr2)
+                        fim = fins[0]
+                        caminho =grafo.procura_BFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr2)
                         tamanho =  len(n)
                         edges= arestas.turnTupleintoNumber(arr2)
@@ -172,26 +178,6 @@ def main():
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
-                if saida2 == 4:
-                        n= matriz.returnPositionsOfMatrix(arr2)
-                        tamanho = len(n)
-                        edges= arestas.turnTupleintoNumber(arr2)
-                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
-                        inicio = matriz.encontraPosicaoInicial(arr2)
-                        fins = matriz.finalsPositionsIntoIntegers(arr2)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        list =[]
-                        for i in fins:
-                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
-                        menor = tamanho*tamanho
-                        dest = 0
-                        for i in list:
-                            if (i[1] < menor): 
-                                dest = i[0]
-                                menor = i[1]
-                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
                 
         if saida == 4:
             saida2= -1
@@ -199,8 +185,9 @@ def main():
                 print("########## SELECIONOU O CIRCUITO 4  ##########" )
                 print("1 -> Gerar o Circuito ")
                 print("2 -> Representar a pista em forma de grafo")
-                print("3 -> Obter o menor caminho - Procura de Custo Uniforme")
-                print("4 -> Obter o menor caminho - Procura BFS ")
+                print("3 -> Pesquisa DFS")
+                print("4 -> Pesquisa BFS")
+                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -210,41 +197,31 @@ def main():
                         l= arestas.getEdges(arr3)
                         [print(i) for i in l]   
                 if saida2 == 3:
+                        inicio = matriz.encontraPosicaoInicial(arr3)
+                        fins = matriz.encontraPosicoesFinais(arr3)
+                        grafo = Grafo(arr3)
+                        fim = fins[1]
+                        caminho =grafo.procura_DFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 4:
+                        inicio = matriz.encontraPosicaoInicial(arr3)
+                        fins = matriz.encontraPosicoesFinais(arr3)
+                        grafo = Grafo(arr3)
+                        fim = fins[0]
+                        caminho =grafo.procura_BFS(inicio,fim)
+                        print(caminho)
+                if saida2 == 5:
                         n= matriz.returnPositionsOfMatrix(arr3)
                         tamanho =  len(n)
                         edges= arestas.turnTupleintoNumber(arr3)
-                        inicio = matriz.encontraPosicaoInicial(arr3) 
+                        inicio = matriz.encontraPosicaoInicial(arr) 
                         fins = matriz.finalsPositionsIntoIntegers(arr3)
                         il=str(inicio[0])
                         ic=str(inicio[1])
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
-                if saida2 == 4:
-                        n= matriz.returnPositionsOfMatrix(arr3)
-                        tamanho = len(n)
-                        edges= arestas.turnTupleintoNumber(arr3)
-                        grafo = pesquisaBFS(edges, 1, tamanho*tamanho)
-                        inicio = matriz.encontraPosicaoInicial(arr3)
-                        fins = matriz.finalsPositionsIntoIntegers(arr3)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        list =[]
-                        for i in fins:
-                            list.append(grafo.menorCusto(grafo, int(newi), (i), tamanho*tamanho))
-                        menor = tamanho*tamanho
-                        dest = 0
-                        for i in list:
-                            if (i[1] < menor): 
-                                dest = i[0]
-                                menor = i[1]
-                        grafo.bfs(grafo, int(newi), dest, tamanho*tamanho)
    
-
-           
-
-
 
 if __name__ == "__main__":
     main() 

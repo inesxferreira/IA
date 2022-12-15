@@ -70,3 +70,44 @@ class Arestas():
             add=(int(newi),int(newf),custo)
             newlist.append(add)
         return newlist 
+
+    def adjcenciasEcusto(self,arr,x_atual,y_atual):
+        matriz = Matriz()
+        list=[]
+        if ([x_atual-1,y_atual]) in matriz.returnPositionsOfMatrix(arr): 
+            anex = ((x_atual-1,y_atual),matriz.returnCustoOfaPos(arr,(x_atual-1,y_atual)))
+            list.append(anex)
+        if ([x_atual+1,y_atual]) in matriz.returnPositionsOfMatrix(arr):
+            anex = ((x_atual+1,y_atual),matriz.returnCustoOfaPos(arr,(x_atual+1,y_atual)))
+            list.append(anex)
+        if ([x_atual,y_atual-1]) in matriz.returnPositionsOfMatrix(arr):
+            anex= (x_atual,y_atual-1),matriz.returnCustoOfaPos(arr,(x_atual,y_atual-1))
+            list.append(anex)
+        if ([x_atual,y_atual+1]) in matriz.returnPositionsOfMatrix(arr):
+            anex= (x_atual,y_atual+1),matriz.returnCustoOfaPos(arr,(x_atual,y_atual+1))
+            list.append(anex)
+        if ([x_atual-1,y_atual-1]) in matriz.returnPositionsOfMatrix(arr):
+            anex = (x_atual-1,y_atual-1),matriz.returnCustoOfaPos(arr,(x_atual-1,y_atual-1))
+            list.append(anex)
+        if ([x_atual+1,y_atual-1]) in matriz.returnPositionsOfMatrix(arr):
+            anex = (x_atual+1,y_atual-1),matriz.returnCustoOfaPos(arr,(x_atual+1,y_atual-1))
+            list.append(anex)
+        if ([x_atual-1,y_atual+1]) in matriz.returnPositionsOfMatrix(arr):
+            anex = (x_atual-1,y_atual+1),matriz.returnCustoOfaPos(arr,(x_atual-1,y_atual+1))
+            list.append(anex)
+        if ([x_atual+1,y_atual+1]) in matriz.returnPositionsOfMatrix(arr):
+            anex = (x_atual+1,y_atual+1),matriz.returnCustoOfaPos(arr,(x_atual+1,y_atual+1))
+            list.append(anex)
+        #retorna a lista das posições adjacentes a uma dada cordenada
+        return(list)
+    
+    def arestinhasParaGrafo(self,arr):
+        matriz = Matriz()
+        m=matriz.listaToMatriz(arr)
+        lista = m[0]
+        newAdjs=[]
+        for i in range (len(m)): #colunas
+            for j in range (len(lista)): #linhas
+                #if (matriz[i][j]!= 'X'):
+                    newAdjs.append([(i,j),self.adjcenciasEcusto(arr,i,j)])
+        return(dict(newAdjs))
