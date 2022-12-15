@@ -5,6 +5,8 @@ from newgrafo import oGrafo
 from custoUniforme import Nodo
 from custoUniforme import CustoUniforme
 from Grafo import Grafo
+from dictionary import Dictionary
+from informados import Informados
 
 
         
@@ -38,6 +40,7 @@ def main():
     saida = -1
     matriz = Matriz()
     arestas = Arestas()
+    dict= Dictionary()
 
     
     while saida != 0:
@@ -115,8 +118,12 @@ def main():
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
                 if saida2 == 6:
-                        print(matriz.returnPositionsOfMatrix(arr))
-                        
+                        inicio = matriz.encontraPosicaoInicial(arr1)
+                        t = dict.makeGrafo(arr1, inicio)
+                        fins = matriz.finalsPositionsIntoIntegers(arr)
+                        inf = Informados()
+                        print(inf.greedy(dict, arr, inicio, fins[0]))
+
  
                           
         if saida == 2:
@@ -183,6 +190,11 @@ def main():
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
+                if saida2 == 6:
+                        inicio = matriz.encontraPosicaoInicial(arr1)
+            
+                        t = dict.makeGrafo(arr1, inicio)
+                        print(t)
         if saida == 3:
             saida2= -1
             while saida2 !=0:
@@ -247,7 +259,11 @@ def main():
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
-                
+                if saida2 == 6:
+                        inicio = matriz.encontraPosicaoInicial(arr1)
+            
+                        t = dict.makeGrafo(arr1, inicio)
+                        print(t)
         if saida == 4:
             saida2= -1
             while saida2 !=0:
@@ -312,7 +328,11 @@ def main():
                         newi=il+ic
                         grafito=CustoUniforme(edges,tamanho*tamanho)
                         grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
-   
+                if saida2 == 6:
+                        inicio = matriz.encontraPosicaoInicial(arr1)
+            
+                        t = dict.makeGrafo(arr1, inicio)
+                        print(t) 
 
 if __name__ == "__main__":
     main() 
