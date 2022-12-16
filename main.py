@@ -7,6 +7,7 @@ from custoUniforme import CustoUniforme
 from Grafo import Grafo
 from dictionary import Dictionary
 from informados import Informados
+from test import UCS
 
 
         
@@ -61,7 +62,6 @@ def main():
                 print("2 -> Representar a pista em forma de grafo")
                 print("3 -> Pesquisa DFS")
                 print("4 -> Pesquisa BFS")
-                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -76,15 +76,15 @@ def main():
                         grafo = Grafo(arr)
                         path =[]
                         visited = set()
-                        list =[]
+                        mylist =[]
                         for i in fins:
                             path2 =[]
                             visited2 = set()
                             f= grafo.verificaDFSfins(inicio,i,path2,visited2)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
@@ -94,29 +94,18 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr)
                         fins = matriz.encontraPosicoesFinais(arr)
                         grafo = Grafo(arr)
-                        list=[]
+                        mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
                         caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
-                if saida2 == 5:
-                        n= matriz.returnPositionsOfMatrix(arr)
-                        tamanho =  len(n)
-                        edges= arestas.turnTupleintoNumber(arr)
-                        inicio = matriz.encontraPosicaoInicial(arr) 
-                        fins = matriz.finalsPositionsIntoIntegers(arr)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        grafito=CustoUniforme(edges,tamanho*tamanho)
-                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
                 if saida2 == 6:
                         inicio = matriz.encontraPosicaoInicial(arr1)
                         t = dict.makeGrafo(arr1, inicio)
@@ -134,7 +123,6 @@ def main():
                 print("2 -> Representar a pista em forma de grafo")
                 print("3 -> Pesquisa DFS")
                 print("4 -> Pesquisa BFS")
-                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -149,15 +137,15 @@ def main():
                         grafo = Grafo(arr1)
                         path =[]
                         visited = set()
-                        list =[]
+                        mylist =[]
                         for i in fins:
                             path2 =[]
                             visited2 = set()
                             f= grafo.verificaDFSfins(inicio,i,path2,visited2)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
@@ -167,29 +155,18 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr1)
                         fins = matriz.encontraPosicoesFinais(arr1)
                         grafo = Grafo(arr1)
-                        list=[]
+                        mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
                         caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
-                if saida2 == 5:
-                        n= matriz.returnPositionsOfMatrix(arr1)
-                        tamanho =  len(n)
-                        edges= arestas.turnTupleintoNumber(arr1)
-                        inicio = matriz.encontraPosicaoInicial(arr1) 
-                        fins = matriz.finalsPositionsIntoIntegers(arr1)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        grafito=CustoUniforme(edges,tamanho*tamanho)
-                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
                 if saida2 == 6:
                         inicio = matriz.encontraPosicaoInicial(arr1)
             
@@ -203,7 +180,6 @@ def main():
                 print("2 -> Representar a pista em forma de grafo")
                 print("3 -> Pesquisa DFS")
                 print("4 -> Pesquisa BFS")
-                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -218,15 +194,15 @@ def main():
                         grafo = Grafo(arr2)
                         path =[]
                         visited = set()
-                        list =[]
+                        mylist =[]
                         for i in fins:
                             path2 =[]
                             visited2 = set()
                             f= grafo.verificaDFSfins(inicio,i,path2,visited2)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
@@ -236,29 +212,18 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr2)
                         fins = matriz.encontraPosicoesFinais(arr2)
                         grafo = Grafo(arr2)
-                        list=[]
+                        mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
                         caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
-                if saida2 == 5:
-                        n= matriz.returnPositionsOfMatrix(arr2)
-                        tamanho =  len(n)
-                        edges= arestas.turnTupleintoNumber(arr2)
-                        inicio = matriz.encontraPosicaoInicial(arr2) 
-                        fins = matriz.finalsPositionsIntoIntegers(arr2)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        grafito=CustoUniforme(edges,tamanho*tamanho)
-                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
                 if saida2 == 6:
                         inicio = matriz.encontraPosicaoInicial(arr1)
             
@@ -272,7 +237,6 @@ def main():
                 print("2 -> Representar a pista em forma de grafo")
                 print("3 -> Pesquisa DFS")
                 print("4 -> Pesquisa BFS")
-                print("5 -> Procura de Custo Uniforme")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -287,15 +251,15 @@ def main():
                         grafo = Grafo(arr3)
                         path =[]
                         visited = set()
-                        list =[]
+                        mylist =[]
                         for i in fins:
                             path2 =[]
                             visited2 = set()
                             f= grafo.verificaDFSfins(inicio,i,path2,visited2)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
@@ -305,29 +269,18 @@ def main():
                         inicio = matriz.encontraPosicaoInicial(arr3)
                         fins = matriz.encontraPosicoesFinais(arr3)
                         grafo = Grafo(arr3)
-                        list=[]
+                        mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
-                            list.append(f)
+                            mylist.append(f)
                         menor = 10000
                         dest =(0,0)
-                        for i in list:
+                        for i in mylist:
                             if (i[1] < menor): 
                                 dest = i[0]
                                 menor = i[1]
                         caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
-                if saida2 == 5:
-                        n= matriz.returnPositionsOfMatrix(arr3)
-                        tamanho =  len(n)
-                        edges= arestas.turnTupleintoNumber(arr3)
-                        inicio = matriz.encontraPosicaoInicial(arr) 
-                        fins = matriz.finalsPositionsIntoIntegers(arr3)
-                        il=str(inicio[0])
-                        ic=str(inicio[1])
-                        newi=il+ic
-                        grafito=CustoUniforme(edges,tamanho*tamanho)
-                        grafito.encontraCaminhoMaisCurto(grafito,int(newi),fins,tamanho*tamanho)
                 if saida2 == 6:
                         inicio = matriz.encontraPosicaoInicial(arr1)
             
