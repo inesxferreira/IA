@@ -5,8 +5,7 @@ from queue import Queue
 from  arestas import Arestas
 from matrix import Matriz
 
-class Grafo:
-    
+class NaoInformados():
     def __init__(self, arr):
         arestas =Arestas()
         self.m_graph = arestas.arestinhasParaGrafo(arr) 
@@ -45,13 +44,16 @@ class Grafo:
         path.pop() 
         return None
     
+    ##############
+    #    DFS     #
+    ##############
     def procura_DFS(self, start, end, path, visited):
         path.append(start)
         visited.add(start)
         if start == end:
             custoT = self.calcula_custo(path)
             #return (path, custoT)
-            print ("A Procura DFS entre a posição inicial e final é:",path,"com o custo",custoT)
+            print ("A procura DFS entre a posição inicial e final é:",path,"com o custo",custoT)
             print ("Sendo que o caminho percorrido foi:", visited)
             #visited=set()
         for (adjacente, peso) in self.m_graph[start]:
@@ -100,6 +102,9 @@ class Grafo:
             custo = self.calcula_custo(path)
         return (nodofinal,custo)
 
+    ##############
+    #     BFS    #
+    ##############
     def procura_BFS(self, start, end):
         # definir nodos visitados para evitar ciclos
         visited = set()

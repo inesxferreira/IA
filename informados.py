@@ -15,9 +15,11 @@ class Informados():
 
     # cálculo da distância em linha reta da posição atual à posição final
     def distanciaEuclidiana(self, pAt, pFi):
-        a = np.array(pAt)
+        """a = np.array(pAt)
         f = np.array(pFi)
         dist = np.linalg.norm(f-a)
+        """
+        dist = abs(pAt[0] - pFi[0]) + abs(pAt[1] - pFi[1])
 
         return dist
 
@@ -34,7 +36,9 @@ class Informados():
 
         return custoT
 
-    # aplica o algoritmo Greedy no grafo fornecido
+    ##############
+    #   Greedy   #
+    ##############
     def greedy(self, dict, arr, inicio, fim):
         # open_list é uma lista de nodos visitados, mas com vizinhos
         # que ainda não foram todos visitados, começa com o  inicio
@@ -46,66 +50,72 @@ class Informados():
         # parents é um dicionário que mantém o antecessor de um nodo
         # começa com inicio
         parents = {}
-        parents[inicio] = inicio
+        parent = inicio
 
         # velocidade inicial
         vel = (0, 0)
 
         lofl = dict.listaToM(arr)
-        menor = 1000
 
         while len(open_list) > 0:
             n = None
-
+            menor = 1000.0
             # encontrar nodo com a menor heuristica
             for i in open_list:
-                # se a distancia for menor guardamos a calculaCustocalculaCustoposição e a velocidade
-                d = self.distanciaEuclidiana(i[0], fim)
-                if (d < menor):  # guardar o valor com a menor distancia ao fim
+                d = self.distanciaEuclidiana(i, fim)
+
+                if (d <= menor):  # guardar o valor com a menor distancia ao fim
                     menor = d
                     n = i
 
-                if n == None:
-                        print('Caminho não existe!')
-                        return None
+            open_list.clear()
 
-                # se o nodo corrente é o destino
-                # reconstruir o caminho a partir desse nodo até ao inicio
-                # seguindo o antecessor
-                if n == fim:  # if n in fim
-                    reconstCam = []
+            if n == None:
+                print('Caminho não existe!')
+                return None
 
-                    while parents[n] != n:
-                        reconstCam.append(n)
-                        n = parents[n]
+            # se o nodo corrente é o destino
+            # reconstruir o caminho a partir desse nodo até ao inicio
+            # seguindo o antecessor
+            if n == fim:  # if n in fim
+                reconstCam = []
+                parents[n] = parent
+                while parents[n] != n:
+                    reconstCam.append(n)
+                    n = parents[n]
 
-                    reconstCam.append(inicio)
+                reconstCam.append(inicio)
+                reconstCam.reverse()
 
-                    reconstCam.reverse()
+                print("A procura Greedy entre a posição inicial e final é:",
+                      reconstCam, "com custo", self.calculaCusto(lofl, reconstCam))
 
-                    # retorna caminho, custo
-                    return (reconstCam, self.calculaCusto(lofl, reconstCam))
+                # retorna caminho, custo
+                return (reconstCam, self.calculaCusto(lofl, reconstCam))
 
-                # todas as posições seguintes possíveis do nodo atual
-                for m in dict.proxPos(lofl, arr, n, vel):
-                    # Se o nodo corrente nao esta na open nem na closed list
-                    # adiciona-lo à open_list e marcar o antecessor
-                    if m not in open_list and m not in closed_list:
-                        open_list.add(m)
-                        parents[m] = n
+            # todas as posições seguintes possíveis do nodo atual
+            for m in dict.proxPos(lofl, arr, n, vel):
+                # Se o nodo corrente nao esta na open nem na closed list
+                # adiciona-lo à open_list e marcar o antecessor
+                if m not in open_list and m not in closed_list:
+                    open_list.add(m[0])
+                    #parents[m[0]] = n
+            parents[n] = parent
+            parent = n
+            # remover n da open_list e adiciona-lo à closed_list
+            # porque todos os seus vizinhos foram inspecionados
+            # open_list.remove(n)
+            closed_list.add(n)
+            # print(open_list)
+            # print("closed="+str(closed_list))
+            # print("open="+str(open_list))
 
-                # remover n da open_list e adiciona-lo à closed_list
-                # porque todos os seus vizinhos foram inspecionados
-                open_list.remove(n)
-                closed_list.add(n)
+        print('Caminho não existe!')
+        return None
 
-            print('Caminho não existe!')
-            return None
-
-    ############################
-    #           A*             #
-    ############################
-
+    ##############
+    #     A*     #
+    ##############
     def procura_aStar(self, start, end):
         # open_list is a list of nodes which have been visited, but who's neighbors
         # haven't all been inspected, starts off with the start node

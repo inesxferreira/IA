@@ -1,7 +1,7 @@
 from matrix import Matriz
 from arestas import Arestas
-from Grafo import Grafo
 from dictionary import Dictionary
+from naoInformados import NaoInformados
 from informados import Informados
         
 def main():
@@ -55,6 +55,7 @@ def main():
                 print("2 -> Representar a pista em forma de grafo")
                 print("3 -> Pesquisa DFS")
                 print("4 -> Pesquisa BFS")
+                print("5 -> Pesquisa Greedy")
                 print("0 ->  Voltar ao menu")
                 print("##############################################" )
                 saida2 = int(input("Introduza a sua opção-> "))
@@ -66,7 +67,7 @@ def main():
                 if saida2 == 3:
                         inicio = matriz.encontraPosicaoInicial(arr)
                         fins = matriz.encontraPosicoesFinais(arr)
-                        grafo = Grafo(arr)
+                        grafo = NaoInformados(arr)
                         path =[]
                         visited = set()
                         mylist =[]
@@ -86,7 +87,7 @@ def main():
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr)
                         fins = matriz.encontraPosicoesFinais(arr)
-                        grafo = Grafo(arr)
+                        grafo = NaoInformados(arr)
                         mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
@@ -99,15 +100,13 @@ def main():
                                 menor = i[1]
                         caminho =grafo.procura_BFS(inicio,dest)
                         print(caminho)
-                if saida2 == 6:
-                        inicio = matriz.encontraPosicaoInicial(arr1)
-                        t = dict.makeGrafo(arr1, inicio)
+                if saida2 == 5:
+                        inicio = matriz.encontraPosicaoInicial(arr)
+                        t = dict.makeGrafo(arr, inicio)
                         fins = matriz.encontraPosicoesFinais(arr)
                         inf = Informados()
-                        print(inf.greedy(dict, arr, inicio, fins[0]))
+                        greedy = inf.greedy(dict, arr, inicio, fins[0])
 
- 
-                          
         if saida == 2:
             saida2= -1
             while saida2 !=0:
@@ -127,7 +126,7 @@ def main():
                 if saida2 == 3:
                         inicio = matriz.encontraPosicaoInicial(arr1)
                         fins = matriz.encontraPosicoesFinais(arr1)
-                        grafo = Grafo(arr1)
+                        grafo = NaoInformados(arr1)
                         path =[]
                         visited = set()
                         mylist =[]
@@ -147,7 +146,7 @@ def main():
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr1)
                         fins = matriz.encontraPosicoesFinais(arr1)
-                        grafo = Grafo(arr1)
+                        grafo = NaoInformados(arr1)
                         mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
@@ -162,9 +161,11 @@ def main():
                         print(caminho)
                 if saida2 == 6:
                         inicio = matriz.encontraPosicaoInicial(arr1)
-            
                         t = dict.makeGrafo(arr1, inicio)
-                        print(t)
+                        fins = matriz.encontraPosicoesFinais(arr1)
+                        inf = Informados()
+                        greedy = inf.greedy(dict, arr1, inicio, fins[0])
+                        print(greedy)
         if saida == 3:
             saida2= -1
             while saida2 !=0:
@@ -184,7 +185,7 @@ def main():
                 if saida2 == 3:
                         inicio = matriz.encontraPosicaoInicial(arr2)
                         fins = matriz.encontraPosicoesFinais(arr2)
-                        grafo = Grafo(arr2)
+                        grafo = NaoInformados(arr2)
                         path =[]
                         visited = set()
                         mylist =[]
@@ -204,7 +205,7 @@ def main():
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr2)
                         fins = matriz.encontraPosicoesFinais(arr2)
-                        grafo = Grafo(arr2)
+                        grafo = NaoInformados(arr2)
                         mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
@@ -241,7 +242,7 @@ def main():
                 if saida2 == 3:
                         inicio = matriz.encontraPosicaoInicial(arr3)
                         fins = matriz.encontraPosicoesFinais(arr3)
-                        grafo = Grafo(arr3)
+                        grafo = NaoInformados(arr3)
                         path =[]
                         visited = set()
                         mylist =[]
@@ -261,7 +262,7 @@ def main():
                 if saida2 == 4:
                         inicio = matriz.encontraPosicaoInicial(arr3)
                         fins = matriz.encontraPosicoesFinais(arr3)
-                        grafo = Grafo(arr3)
+                        grafo = NaoInformados(arr3)
                         mylist=[]
                         for i in fins:
                             f= grafo.verificaBFSfins(inicio,i)
