@@ -1,13 +1,8 @@
 from matrix import Matriz
 from arestas import Arestas
-from newgrafo import Nodo
-from newgrafo import oGrafo
 from Grafo import Grafo
 from dictionary import Dictionary
 from informados import Informados
-from test import UCS
-
-
         
 def main():
     #leitura e representação do circuito do ficheiro txt
