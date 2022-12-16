@@ -2,8 +2,6 @@ from matrix import Matriz
 from arestas import Arestas
 from newgrafo import Nodo
 from newgrafo import oGrafo
-from custoUniforme import Nodo
-from custoUniforme import CustoUniforme
 from Grafo import Grafo
 from dictionary import Dictionary
 from informados import Informados
