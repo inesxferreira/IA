@@ -36,10 +36,39 @@ class Informados():
 
         return custoT
 
+    def validaSalto (self,grafo,pI,pF,vel):
+        #validar o caminho entre pI e pF
+        #posição inicial
+        parent = pI
+        currpos = (0,0)
+        if vel[0] > 0:
+            x = -1
+        else: x = 1
+        if vel[1] > 0:
+            y = -1
+        else: y = 1
+        
+        decrementer = (x,y)
+        while parent != pF:
+        #procurar próximo nodo consoante a velocidade
+            if vel[0] != 0:
+                currpos[0] = parent[0] + vel[0]
+                vel[0] = vel[0] + decrementer[0]
+            if vel[1] != 0:
+                currpos[1] = parent[1] + vel[1]
+                vel[1] = vel[1] + decrementer[1]
+            if vel != (0,0):
+                currset = grafo[parent]
+                if currpos in currset:
+                    parent = currpos
+            else: return None
+        #retornar a posição válida
+        return parent
+
     ##############
     #   Greedy   #
     ##############
-    def greedy(self, dict, arr, inicio, fim):
+    def greedy(self, dict, grafo, arr, inicio, fim):
         # open_list é uma lista de nodos visitados, mas com vizinhos
         # que ainda não foram todos visitados, começa com o  inicio
         # closed_list é uma lista de nodos visitados
@@ -73,7 +102,12 @@ class Informados():
             if n == None:
                 print('Caminho não existe!')
                 return None
-
+            
+            if n not in dict.proxPos(lofl, arr, parent, vel):
+                vel = (0,0)
+            else: vel = (n[0]-parent[0],n[1]-parent[1])
+            print(vel)
+            
             # se o nodo corrente é o destino
             # reconstruir o caminho a partir desse nodo até ao inicio
             # seguindo o antecessor
@@ -94,10 +128,10 @@ class Informados():
                 return (reconstCam, self.calculaCusto(lofl, reconstCam))
 
             # todas as posições seguintes possíveis do nodo atual
-            for m in dict.proxPos(lofl, arr, n, vel):
-                # Se o nodo corrente nao esta na open nem na closed list
-                # adiciona-lo à open_list e marcar o antecessor
-                if m not in open_list and m not in closed_list:
+            for m in dict.proxPos(lofl, arr, n, vel):                
+                # Se o nodo corrente nao esta na open nem na closed list e marcar o antecessor
+                if (m not in closed_list):
+                    print(self.validaSalto(grafo,parent,m[0],vel))
                     open_list.add(m[0])
                     #parents[m[0]] = n
             parents[n] = parent

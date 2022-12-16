@@ -45,8 +45,7 @@ class Dictionary():
 
     # calcula as próximas posições de uma dada posição tendo em consideração à velocidade do jogador
     def proxPos(self, lofl, arr, posicao, vel):
-        adj = [(-1, -1), (-1, 0), (-1, 1), (0, 0),
-               (0, 1), (0, -1), (1, 0), (1, -1), (1, 1)]
+        adj = [(-1, -1), (-1, 0), (-1, 1), (0, 0),(0, 1), (0, -1), (1, 0), (1, -1), (1, 1)]
         filhos = []
         custoP = 0
 

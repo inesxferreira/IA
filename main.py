@@ -102,10 +102,10 @@ def main():
                         print(caminho)
                 if saida2 == 5:
                         inicio = matriz.encontraPosicaoInicial(arr)
-                        t = dict.makeGrafo(arr, inicio)
+                        grafo = dict.makeGrafo(arr, inicio)
                         fins = matriz.encontraPosicoesFinais(arr)
                         inf = Informados()
-                        greedy = inf.greedy(dict, arr, inicio, fins[0])
+                        greedy = inf.greedy(dict, grafo, arr, inicio, fins[0])
 
         if saida == 2:
             saida2= -1
