@@ -49,17 +49,23 @@ class Dictionary():
         adj = [(-1, -1), (-1, 0), (-1, 1), (0, 0),(0, 1), (0, -1), (1, 0), (1, -1), (1, 1)]
         filhos=[]
         custoP = 0
-        for a in adj:
-            proxpos = (posicao[0] + a[0] + vel[0], posicao[1] + a[1] + vel[1])
-            if ((self.dentroDaPista(arr, proxpos))): #garante que está dentro da pista
 
-                if (self.eParede(lofl,proxpos)): #vai contra parede
+        #calcula cada possibilidade de nodos adjacentes
+        for a in adj:
+            x = posicao[0] + a[0] + vel[0]
+            y = posicao[1] + a[1] + vel[1]
+            prox = (x,y)
+
+            if ((self.dentroDaPista(arr, prox))): #garante que está dentro da pista
+
+                if (self.eParede(lofl,prox)): #vai contra parede
                     custoP = 25
+                    #vel=(0,0)
                     
                 else: #é pista
                     custoP = 1
                 
-                filhos.append((proxpos,custoP)) #acrescenta uma posição adjacente 
+                filhos.append((prox,custoP)) #acrescenta uma posição adjacente 
         
         return filhos
 

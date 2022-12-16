@@ -107,7 +107,7 @@ def main():
                 if saida2 == 6:
                         inicio = matriz.encontraPosicaoInicial(arr1)
                         t = dict.makeGrafo(arr1, inicio)
-                        fins = matriz.finalsPositionsIntoIntegers(arr)
+                        fins = matriz.encontraPosicoesFinais(arr)
                         inf = Informados()
                         print(inf.greedy(dict, arr, inicio, fins[0]))
 

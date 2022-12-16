@@ -8,73 +8,71 @@ import math
 from dictionary import Dictionary
 import numpy as np
 
+
 class Informados():
     def __init__(self):
-         dict = Dictionary()
-         
-    #cálculo da distância em linha reta da posição atual à posição final
+        dict = Dictionary()
+
+    # cálculo da distância em linha reta da posição atual à posição final
     def distanciaEuclidiana(self, pAt, pFi):
         a = np.array(pAt)
         f = np.array(pFi)
         dist = np.linalg.norm(f-a)
-        
+
         return dist
 
-
-    def calculaCusto(self, dict, caminho):
+    # dado um caminho calcula o custo total do mesmo
+    def calculaCusto(self, lofl, caminho):
         custoT = 0
 
-        #percorre o caminho resultado do algoritmo
-        for nodo in caminho:
-            #procura o nodo no dicionário
-            currset = dict[nodo]
-            if(currset != []):
-                 currset.index
-            custoT = custoT + key[1]
+        # percorre o caminho resultado do algoritmo
+        for n in caminho:
+            if (lofl[n[0]][n[1]]) == "X":
+                custoT += 25
+            else:
+                custoT += 1
 
         return custoT
 
     # aplica o algoritmo Greedy no grafo fornecido
-    def greedy(self, dict,arr,inicio, fim):
-            
-            
-            # open_list é uma lista de nodos visitados, mas com vizinhos
-            # que ainda não foram todos visitados, começa com o  inicio
-            # closed_list é uma lista de nodos visitados
-            # e todos os seus vizinhos também já o foram
-            open_list = set([inicio])
-            closed_list = set([])
+    def greedy(self, dict, arr, inicio, fim):
+        # open_list é uma lista de nodos visitados, mas com vizinhos
+        # que ainda não foram todos visitados, começa com o  inicio
+        # closed_list é uma lista de nodos visitados
+        # e todos os seus vizinhos também já o foram
+        open_list = set([inicio])
+        closed_list = set([])
 
-            # parents é um dicionário que mantém o antecessor de um nodo
-            # começa com inicio
-            parents = {}
-            parents[inicio] = inicio
-            
-            #velocidade inicial
-            vel = (0,0)
-            
-            lofl = dict.listaToM(arr)
-            menor = 1000
+        # parents é um dicionário que mantém o antecessor de um nodo
+        # começa com inicio
+        parents = {}
+        parents[inicio] = inicio
 
-            while len(open_list) > 0:
-                n= None
-                
-                # encontrar nodo com a menor heuristica
-                for i in open_list:
-                    #se a distancia for menor guardamos a calculaCustocalculaCustoposição e a velocidade
-                    d = self.distanciaEuclidiana(i[0], fim)
-                    if (d < menor):  # guardar o valor com a menor distancia ao fim
-                        menor = d
-                        n=i[0]               
-                        
+        # velocidade inicial
+        vel = (0, 0)
+
+        lofl = dict.listaToM(arr)
+        menor = 1000
+
+        while len(open_list) > 0:
+            n = None
+
+            # encontrar nodo com a menor heuristica
+            for i in open_list:
+                # se a distancia for menor guardamos a calculaCustocalculaCustoposição e a velocidade
+                d = self.distanciaEuclidiana(i[0], fim)
+                if (d < menor):  # guardar o valor com a menor distancia ao fim
+                    menor = d
+                    n = i
+
                 if n == None:
-                    print('Caminho não existe!')
-                    return None
+                        print('Caminho não existe!')
+                        return None
 
                 # se o nodo corrente é o destino
                 # reconstruir o caminho a partir desse nodo até ao inicio
                 # seguindo o antecessor
-                if n == fim: #if n in fim
+                if n == fim:  # if n in fim
                     reconstCam = []
 
                     while parents[n] != n:
@@ -85,11 +83,11 @@ class Informados():
 
                     reconstCam.reverse()
 
-                    return (reconstCam, self.calculaCusto(dict,reconstCam))
+                    # retorna caminho, custo
+                    return (reconstCam, self.calculaCusto(lofl, reconstCam))
 
-
-                # todas as posições seguintes possíveis do nodo atual 
-                for m in dict.proxPos(lofl, arr, n, vel): 
+                # todas as posições seguintes possíveis do nodo atual
+                for m in dict.proxPos(lofl, arr, n, vel):
                     # Se o nodo corrente nao esta na open nem na closed list
                     # adiciona-lo à open_list e marcar o antecessor
                     if m not in open_list and m not in closed_list:
@@ -103,8 +101,7 @@ class Informados():
 
             print('Caminho não existe!')
             return None
-        
-        
+
     ############################
     #           A*             #
     ############################
