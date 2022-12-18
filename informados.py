@@ -40,30 +40,51 @@ class Informados():
         #validar o caminho entre pI e pF
         #posição inicial
         parent = pI
-        currpos = (0,0)
-        if vel[0] > 0:
-            x = -1
-        else: x = 1
-        if vel[1] > 0:
-            y = -1
-        else: y = 1
+        currposx = 0
+        currposy = 0
         
-        decrementer = (x,y)
-        while parent != pF:
+        print("pI=",pI)
+        print("pf=",pF)
+        
+        if vel[0] > 0: x = -1
+        elif vel[0] < 0: x = 1
+        else: x = 0
+        
+        if vel[1] > 0: y = -1
+        elif vel[1] < 0: y = 1
+        else: y = 0
+        
+        velx = vel[0]
+        vely = vel[1]
+        
+        #ajuda a avançar (x,y) até à posição válida 
+
+
+        while parent != pF and (velx,vely) != (0,0):
         #procurar próximo nodo consoante a velocidade
-            if vel[0] != 0:
-                currpos[0] = parent[0] + vel[0]
-                vel[0] = vel[0] + decrementer[0]
-            if vel[1] != 0:
-                currpos[1] = parent[1] + vel[1]
-                vel[1] = vel[1] + decrementer[1]
-            if vel != (0,0):
-                currset = grafo[parent]
-                if currpos in currset:
-                    parent = currpos
-            else: return None
+            if velx != 0:
+                currposx = parent[0] - x
+                velx = velx + x
+            if vely != 0:
+                currposy = parent[1] - y
+                vely = vely + y
+            currpos = (currposx,currposy)
+            print("currpos = ",currpos)
+            currset = grafo[parent]
+            print(currset)
+            
+            if (currpos, 1) in currset:
+                parent = currpos
+            elif (currpos, 25) in currset:
+                return parent
+            """for setvalue in currset:
+                #setvalue representado por (posição, custo)
+                if setvalue[0] == currpos and setvalue[1] == 25:
+                    return parent
+                if setvalue[0] == currpos and setvalue[1] == 1:
+                    parent = currpos"""
         #retornar a posição válida
-        return parent
+        return pF
 
     ##############
     #   Greedy   #
@@ -85,6 +106,7 @@ class Informados():
         vel = (0, 0)
 
         lofl = dict.listaToM(arr)
+        listPercorrido = []
 
         while len(open_list) > 0:
             n = None
@@ -103,15 +125,19 @@ class Informados():
                 print('Caminho não existe!')
                 return None
             
+            
+            
+            
             if n not in dict.proxPos(lofl, arr, parent, vel):
                 vel = (0,0)
-            else: vel = (n[0]-parent[0],n[1]-parent[1])
-            print(vel)
+            vel = (n[0]-parent[0],n[1]-parent[1])
+            #print(vel)
             
             # se o nodo corrente é o destino
             # reconstruir o caminho a partir desse nodo até ao inicio
             # seguindo o antecessor
             if n == fim:  # if n in fim
+                
                 reconstCam = []
                 parents[n] = parent
                 while parents[n] != n:
@@ -123,6 +149,7 @@ class Informados():
 
                 print("A procura Greedy entre a posição inicial e final é:",
                       reconstCam, "com custo", self.calculaCusto(lofl, reconstCam))
+                print ("Sendo que os nodos percorridos foram " + str(listPercorrido))
 
                 # retorna caminho, custo
                 return (reconstCam, self.calculaCusto(lofl, reconstCam))
@@ -130,9 +157,12 @@ class Informados():
             # todas as posições seguintes possíveis do nodo atual
             for m in dict.proxPos(lofl, arr, n, vel):                
                 # Se o nodo corrente nao esta na open nem na closed list e marcar o antecessor
-                if (m not in closed_list):
-                    print(self.validaSalto(grafo,parent,m[0],vel))
+                if (m[0] not in closed_list):
+                    newvel = (m[0][0] - n[0], m[0][1] - n[1])
+                    print("newvel=",newvel)
+                    print(self.validaSalto(grafo,n,m[0],newvel))
                     open_list.add(m[0])
+                    listPercorrido.append(m[0])
                     #parents[m[0]] = n
             parents[n] = parent
             parent = n
@@ -140,6 +170,7 @@ class Informados():
             # porque todos os seus vizinhos foram inspecionados
             # open_list.remove(n)
             closed_list.add(n)
+           
             # print(open_list)
             # print("closed="+str(closed_list))
             # print("open="+str(open_list))
