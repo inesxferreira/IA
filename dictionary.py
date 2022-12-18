@@ -13,6 +13,7 @@ class Dictionary():
             out = out + "node" + str(key) + ": " + str(self.grafo[key]) + "\n"
             return out
 
+    #lista de listas representativas do circuito
     def listaToM(self, arr):
         x = arr
         x = [list(i) for i in x]
