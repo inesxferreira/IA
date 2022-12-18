@@ -36,7 +36,6 @@ class Informados():
         #validar o caminho entre pI e pF
         #posição inicial
         parent = pI
-<<<<<<< HEAD
         currposx = 0
         currposy = 0
         
@@ -58,18 +57,6 @@ class Informados():
 
 
         while parent != pF and (velx,vely) != (0,0):
-=======
-        currpos = (0,0)
-        if vel[0] > 0:
-            x = -1
-        else: x = 1
-        if vel[1] > 0:
-            y = -1
-        else: y = 1
-        print("parent is ",parent)
-        decrementer = (x,y)
-        while parent != pF:
->>>>>>> 4facbeed71d0d7a49a5c6c8a27dd0b11285ddf3f
         #procurar próximo nodo consoante a velocidade
             if velx != 0:
                 currposx = parent[0] - x
@@ -133,20 +120,11 @@ class Informados():
                 print('Caminho não existe!')
                 return None
             
-<<<<<<< HEAD
-            
-            
-            
-            if n not in dict.proxPos(lofl, arr, parent, vel):
-                vel = (0,0)
-            vel = (n[0]-parent[0],n[1]-parent[1])
-=======
             #se o nodo em questão não for filho do parent 
             if n not in dict.proxPos(lofl, arr, parent, vel):
                 vel = (0,0)
             else: 
                 vel = (n[0]-parent[0],n[1]-parent[1]) #atribuir velocidade ao jogador
->>>>>>> 4facbeed71d0d7a49a5c6c8a27dd0b11285ddf3f
             #print(vel)
             
             # se o nodo corrente é o destino
@@ -172,17 +150,11 @@ class Informados():
 
             # todas as posições seguintes possíveis do nodo atual
             for m in dict.proxPos(lofl, arr, n, vel):                
-<<<<<<< HEAD
                 # Se o nodo corrente nao esta na open nem na closed list e marcar o antecessor
                 if (m[0] not in closed_list):
                     newvel = (m[0][0] - n[0], m[0][1] - n[1])
                     print("newvel=",newvel)
                     print(self.validaSalto(grafo,n,m[0],newvel))
-=======
-                # Se o nodo corrente nao está na closed list, marcar o seu antecessor
-                if (m not in closed_list):
-                    print(self.validaSalto(grafo,parent,m[0],vel))
->>>>>>> 4facbeed71d0d7a49a5c6c8a27dd0b11285ddf3f
                     open_list.add(m[0])
                     listPercorrido.append(m[0])
                     #parents[m[0]] = n
@@ -191,13 +163,6 @@ class Informados():
             # adicionar à closed_list todos os seus vizinhos foram inspecionados
             # open_list.remove(n)
             closed_list.add(n)
-<<<<<<< HEAD
-           
-            # print(open_list)
-            # print("closed="+str(closed_list))
-            # print("open="+str(open_list))
-=======
->>>>>>> 4facbeed71d0d7a49a5c6c8a27dd0b11285ddf3f
 
         print('Caminho não existe!')
         return None
