@@ -6,8 +6,6 @@ from heapq import heappop, heappush
 from collections import deque
 import math
 from dictionary import Dictionary
-import numpy as np
-
 
 class Informados():
     def __init__(self):
@@ -15,12 +13,7 @@ class Informados():
 
     # cálculo da distância em linha reta da posição atual à posição final
     def distanciaEuclidiana(self, pAt, pFi):
-        """a = np.array(pAt)
-        f = np.array(pFi)
-        dist = np.linalg.norm(f-a)
-        """
         dist = abs(pAt[0] - pFi[0]) + abs(pAt[1] - pFi[1])
-
         return dist
 
     # dado um caminho calcula o custo total do mesmo
@@ -29,13 +22,16 @@ class Informados():
 
         # percorre o caminho resultado do algoritmo
         for n in caminho:
+            #verifica se é parede
             if (lofl[n[0]][n[1]]) == "X":
                 custoT += 25
             else:
+                #ou pista
                 custoT += 1
 
         return custoT
 
+    # verifica se o salto entre duas posições é possível, se tiver paredes pelo meio dá uma alternativa
     def validaSalto (self,grafo,pI,pF,vel):
         #validar o caminho entre pI e pF
         #posição inicial
@@ -47,7 +43,7 @@ class Informados():
         if vel[1] > 0:
             y = -1
         else: y = 1
-        
+        print("parent is ",parent)
         decrementer = (x,y)
         while parent != pF:
         #procurar próximo nodo consoante a velocidade
@@ -69,21 +65,19 @@ class Informados():
     #   Greedy   #
     ##############
     def greedy(self, dict, grafo, arr, inicio, fim):
-        # open_list é uma lista de nodos visitados, mas com vizinhos
-        # que ainda não foram todos visitados, começa com o  inicio
-        # closed_list é uma lista de nodos visitados
-        # e todos os seus vizinhos também já o foram
+        # lista de nodos visitados, mas com vizinhos que ainda não foram todos visitados, começa com o  inicio
         open_list = set([inicio])
+        # lista de nodos visitados mas vizinhos também já foram visitados
         closed_list = set([])
 
-        # parents é um dicionário que mantém o antecessor de um nodo
-        # começa com inicio
+        # parents é um dicionário que mantém o antecessor(parent) de um nodo
         parents = {}
         parent = inicio
 
         # velocidade inicial
         vel = (0, 0)
 
+        #lista de listas que representam o circuito como uma matriz
         lofl = dict.listaToM(arr)
 
         while len(open_list) > 0:
@@ -97,25 +91,28 @@ class Informados():
                     menor = d
                     n = i
 
+            #limpa todos os nodos presentes na open list
             open_list.clear()
 
             if n == None:
                 print('Caminho não existe!')
                 return None
             
+            #se o nodo em questão não for filho do parent 
             if n not in dict.proxPos(lofl, arr, parent, vel):
                 vel = (0,0)
-            else: vel = (n[0]-parent[0],n[1]-parent[1])
-            print(vel)
+            else: 
+                vel = (n[0]-parent[0],n[1]-parent[1]) #atribuir velocidade ao jogador
+            #print(vel)
             
             # se o nodo corrente é o destino
-            # reconstruir o caminho a partir desse nodo até ao inicio
-            # seguindo o antecessor
             if n == fim:  # if n in fim
                 reconstCam = []
                 parents[n] = parent
                 while parents[n] != n:
+                    #reconstruir caminho até ao nodo inicial
                     reconstCam.append(n)
+                    #marcar o antecessor do nodo para a próxima iteração
                     n = parents[n]
 
                 reconstCam.append(inicio)
@@ -129,20 +126,16 @@ class Informados():
 
             # todas as posições seguintes possíveis do nodo atual
             for m in dict.proxPos(lofl, arr, n, vel):                
-                # Se o nodo corrente nao esta na open nem na closed list e marcar o antecessor
+                # Se o nodo corrente nao está na closed list, marcar o seu antecessor
                 if (m not in closed_list):
                     print(self.validaSalto(grafo,parent,m[0],vel))
                     open_list.add(m[0])
                     #parents[m[0]] = n
             parents[n] = parent
             parent = n
-            # remover n da open_list e adiciona-lo à closed_list
-            # porque todos os seus vizinhos foram inspecionados
+            # adicionar à closed_list todos os seus vizinhos foram inspecionados
             # open_list.remove(n)
             closed_list.add(n)
-            # print(open_list)
-            # print("closed="+str(closed_list))
-            # print("open="+str(open_list))
 
         print('Caminho não existe!')
         return None
@@ -182,7 +175,7 @@ class Informados():
                 min_estima = self.calcula_est(calc_heurist)
                 n = min_estima
             if n == None:
-                print('Path does not exist!')
+                print('Caminho não existe!')
                 return None
 
             # if the current node is the stop_node
