@@ -5,6 +5,9 @@ from naoInformados import NaoInformados
 from informados import Informados
 
 
+def strike(text):
+    return ''.join([u'\u0336{}'.format(c) for c in text])
+
 def main():
     #leitura e representação do circuito do ficheiro txt
     file1 = open ('./circuitos/circuito.txt', 'r')
@@ -38,6 +41,13 @@ def main():
     dict= Dictionary()
 
     circuitos=[arr,arr1,arr2,arr3]
+    njog=0
+    j=1
+
+    printDFS=0
+    printBFS=0
+    printGreedy=0
+    printA=0
 
     while c != 0:
         print ("########## BEM VINDO AO VECTOR RACE  ##########")
@@ -48,25 +58,29 @@ def main():
         print("3 -> Circuito 3 ")
         print("4 -> Circuito 4 ")
         print("0 -> Sair")
-        print (" ###############################################")
+        print ("###############################################")
         c = int(input("Indique a opção pretendida-> "))
         print("    ")
         if c != 0:
             saida2= -1
             print("###### SELECIONOU O CIRCUITO ",c," ######" )
             njog = int(input(print("Indique o número de jogadores-> ")))
-
-            while saida2 !=0:
-
-                for j in range(njog):
+            
+            while saida2 !=0 and j<=njog: 
                     print("    ")
-                    print("######  MENU JOGADOR ",j+1," ######" )
+                    print("######  MENU JOGADOR ",j," ######" )
                     print("1 -> Gerar o Circuito ")
                     print("2 -> Representar a pista em forma de grafo")
-                    printDFS = print("3 -> Pesquisa DFS")
-                    printBFS = print("4 -> Pesquisa BFS")
-                    printGreedy = print("5 -> Pesquisa Greedy")
-                    printA = print("6 -> Pesquisa A*")
+
+                    if (printDFS == 0): print("3 -> Pesquisa DFS")
+                    else: print(strike("3 -> Pesquisa DFS"))
+                    if (printBFS == 0): print("4 -> Pesquisa BFS")
+                    else:print(strike("4 -> Pesquisa BFS"))
+                    if (printGreedy == 0): print("5 -> Pesquisa Greedy")
+                    else: print(strike("5 -> Pesquisa Greedy"))
+                    if (printA == 0): print("6 -> Pesquisa A*")
+                    else: print(strike("6 -> Pesquisa A*"))
+
                     print("0 -> Voltar ao menu")
                     print("##############################################" )
                     saida2 = int(input("Introduza a sua opção-> "))
@@ -76,7 +90,7 @@ def main():
                     if saida2 == 2:
                             l= arestas.getEdges(circuitos[c-1])
                             [print(i) for i in l]   
-                    if saida2 == 3:
+                    if saida2 == 3 and printDFS == 0 :
                             inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
                             fins = matriz.encontraPosicoesFinais(circuitos[c-1])
                             grafo = NaoInformados(circuitos[c-1])
@@ -96,8 +110,8 @@ def main():
                                     menor = i[1]
                             caminho =grafo.procura_DFS(inicio,dest,path,visited)
                             print(caminho)
-                            printDFS = print("3 -> ")
-                    if saida2 == 4:
+                            printDFS = 1
+                    if saida2 == 4 and printBFS == 0:
                             inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
                             fins = matriz.encontraPosicoesFinais(circuitos[c-1])
                             grafo = NaoInformados(circuitos[c-1])
@@ -113,8 +127,8 @@ def main():
                                     menor = i[1]
                             caminho =grafo.procura_BFS(inicio,dest)
                             print(caminho)
-                            printBFS = print("4 ->  ")
-                    if saida2 == 5:
+                            printBFS = 1
+                    if saida2 == 5 and printGreedy == 0: 
                             inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
                             grafo = dict.makeGrafo(circuitos[c-1], inicio)
                             fins = matriz.encontraPosicoesFinais(circuitos[c-1])
@@ -122,7 +136,12 @@ def main():
                             
                             greedy = inf.greedy(dict, grafo, circuitos[c-1], inicio, fins[0])
                             #print(greedy)
-                            printGreedy = print("5 ->  ")
+                            printGreedy = 1
+
+                    j=j+1
+            print("A sair ...")
+            saida2=0
+            c=0
 
 if __name__ == "__main__":
     main() 
