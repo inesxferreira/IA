@@ -148,6 +148,7 @@ class Informados():
 
                 print("A procura Greedy entre a posição inicial e final é:",
                       reconstCam, "com custo", self.calculaCusto(lofl, reconstCam))
+                print(" ")
                 print ("Sendo que os nodos percorridos foram " + str(listPercorrido))
 
                 # retorna caminho, custo
