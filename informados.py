@@ -30,6 +30,16 @@ class Informados():
                 custoT += 1
 
         return custoT
+    
+    # calcula a distância em linha reta de qualquer ponto da matriz até à posição final
+    def makeHeuristicas(self, matrix, fim):
+        h = {}
+        lista = matrix[0]
+        finais = []
+        for i in range(len(matrix)):  # colunas
+            for j in range(len(lista)):  # linhas
+                h[(i,j)] = self.distanciaEuclidiana((i,j),fim)
+        return h
 
     # verifica se o salto entre duas posições é possível, se tiver paredes pelo meio dá uma alternativa
     def validaSalto (self,grafo,pI,pF,vel):
@@ -93,7 +103,7 @@ class Informados():
 
         # parents é um dicionário que mantém o antecessor(parent) de um nodo
         parents = {}
-        parent = inicio
+        parents[inicio] = inicio
 
         # velocidade inicial
         vel = (0, 0)
@@ -101,20 +111,22 @@ class Informados():
         #lista de listas que representam o circuito como uma matriz
         lofl = dict.listaToM(arr)
         listPercorrido = []
+        
+        heuristicas = self.makeHeuristicas(lofl,fim)
 
         while len(open_list) > 0:
             n = None
             menor = 1000.0
             # encontrar nodo com a menor heuristica
             for i in open_list:
-                d = self.distanciaEuclidiana(i, fim)
+                """d = self.distanciaEuclidiana(i, fim)
 
                 if (d <= menor):  # guardar o valor com a menor distancia ao fim
                     menor = d
+                    n = i"""
+                if heuristicas[i] <= menor:
+                    menor = heuristicas[i]
                     n = i
-
-            #limpa todos os nodos presentes na open list
-            open_list.clear()
 
             if n == None:
                 print('Caminho não existe!')
@@ -124,7 +136,7 @@ class Informados():
             if n == fim:  # if n in fim
                 
                 reconstCam = []
-                parents[n] = parent
+                #parents[n] = parent
                 while parents[n] != n:
                     #reconstruir caminho até ao nodo inicial
                     reconstCam.append(n)
@@ -143,51 +155,65 @@ class Informados():
 
 
             #se o nodo em questão não for filho do parent
-            if (n,1) not in dict.proxPos(lofl, arr, parent, vel) and (n,25) not in dict.proxPos(lofl, arr, parent, vel):
+            if (n,1) not in dict.proxPos(lofl, arr, parents[n], vel) and (n,25) not in dict.proxPos(lofl, arr, parents[n], vel):
                 vel = (0,0)
             else:
-                vel = (n[0]-parent[0],n[1]-parent[1]) #atribuir velocidade ao jogador
+                vel = (n[0]-parents[n][0],n[1]-parents[n][1]) #atribuir velocidade ao jogador
             
 
             # todas as posições seguintes possíveis do nodo atual
-            for m in dict.proxPos(lofl, arr, n, vel):                
+            for (m,cost) in dict.proxPos(lofl, arr, n, vel):                
                 # Se o nodo corrente nao esta na open nem na closed list e marcar o antecessor
-                if (m[0] not in closed_list):
-                    #newvel = (m[0][0] - n[0], m[0][1] - n[1])
-                    #print("newvel=",newvel)
-                    #print(self.validaSalto(grafo,n,m[0],newvel))
-                    open_list.add(m[0])
-                    listPercorrido.append(m[0])
-                    #parents[m[0]] = n
-            parents[n] = parent
-            parent = n
+                if m not in closed_list and m not in open_list:
+                    open_list.add(m)
+                    listPercorrido.append(m)
+                    parents[m] = n
+            
             # adicionar à closed_list todos os seus vizinhos foram inspecionados
-            # open_list.remove(n)
+            open_list.remove(n)
             closed_list.add(n)
 
         print('Caminho não existe!')
         return None
+    
+    # calcula o nodo com menor heurística
+    def calcula_estima(self, estima):
+        l = list(estima.keys())
+        min_estima = estima[l[0]]
+        node = l[0]
+        for k, v in estima.items():
+            if v < min_estima:
+                min_estima = v
+                node = k
+        return node
 
     ##############
     #     A*     #
     ##############
-    def procura_aStar(self, start, end):
-        # open_list is a list of nodes which have been visited, but who's neighbors
-        # haven't all been inspected, starts off with the start node
-        # closed_list is a list of nodes which have been visited
-        # and who's neighbors have been inspected
-        open_list = {start}
+    def aStar(self, dict, grafo, arr, inicio, fim):
+        
+        open_list = {inicio}
         closed_list = set([])
 
         # g contains current distances from start_node to all other nodes
         # the default value (if it's not found in the map) is +infinity
-        g = {}  # g é apra substiruir pelo peso  ???
+        g = {}  ##  g é apra substiruir pelo peso  ???
 
-        g[start] = 0
+        g[inicio] = 0
 
-        # parents contains an adjacency map of all nodes
+        # parents é um dicionário que mantém o antecessor(parent) de um nodo
         parents = {}
-        parents[start] = start
+        parents[inicio] = inicio
+
+        # velocidade inicial
+        vel = (0, 0)
+
+        #lista de listas que representam o circuito como uma matriz
+        lofl = dict.listaToM(arr)
+        listPercorrido = []
+        
+        heuristicas = self.makeHeuristicas(lofl,fim)
+        
         n = None
         while len(open_list) > 0:
             # find a node with the lowest value of f() - evaluation function
@@ -198,9 +224,9 @@ class Informados():
                     n = v
                 else:
                     flag = 1
-                    calc_heurist[v] = g[v] + self.getH(v)
+                    calc_heurist[v] = g[v] + heuristicas[v]
             if flag == 1:
-                min_estima = self.calcula_est(calc_heurist)
+                min_estima = self.calcula_estima(calc_heurist)
                 n = min_estima
             if n == None:
                 print('Caminho não existe!')
@@ -208,36 +234,42 @@ class Informados():
 
             # if the current node is the stop_node
             # then we begin reconstructin the path from it to the start_node
-            if n == end:
+            if n == fim:
                 reconst_path = []
 
                 while parents[n] != n:
                     reconst_path.append(n)
                     n = parents[n]
 
-                reconst_path.append(start)
+                reconst_path.append(inicio)
 
                 reconst_path.reverse()
 
                 #print('Path found: {}'.format(reconst_path))
-                return (reconst_path, self.calcula_custo(reconst_path))
+                return (reconst_path, self.calcula_custo(lofl, reconst_path))
 
+
+            #se o nodo em questão não for filho do parent
+            if (n,1) not in dict.proxPos(lofl, arr, parents[n], vel) and (n,25) not in dict.proxPos(lofl, arr, parents[n], vel):
+                vel = (0,0)
+            else:
+                vel = (n[0]-parents[n][0],n[1]-parents[n][1]) #atribuir velocidade ao jogador
+            
             # for all neighbors of the current node do
-            # definir função getneighbours  tem de ter um par nodo peso
-            for (m, weight) in self.getNeighbours(n):
+            for (m,cost) in dict.proxPos(lofl, arr, n, vel):   # definir função getneighbours  tem de ter um par nodo peso
                 # if the current node isn't in both open_list and closed_list
                 # add it to open_list and note n as it's parent
                 if m not in open_list and m not in closed_list:
                     open_list.add(m)
                     parents[m] = n
-                    g[m] = g[n] + weight
+                    g[m] = g[n] + cost
 
                 # otherwise, check if it's quicker to first visit n, then m
                 # and if it is, update parent data and g data
                 # and if the node was in the closed_list, move it to open_list
                 else:
-                    if g[m] > g[n] + weight:
-                        g[m] = g[n] + weight
+                    if g[m] > g[n] + cost:
+                        g[m] = g[n] + cost
                         parents[m] = n
 
                         if m in closed_list:
@@ -249,5 +281,5 @@ class Informados():
             open_list.remove(n)
             closed_list.add(n)
 
-        print('Path does not exist!')
+        print('Caminho não existe!')
         return None
