@@ -143,7 +143,7 @@ class Informados():
 
 
             #se o nodo em questão não for filho do parent
-            if n not in dict.proxPos(lofl, arr, parent, vel):
+            if (n,1) not in dict.proxPos(lofl, arr, parent, vel) and (n,25) not in dict.proxPos(lofl, arr, parent, vel):
                 vel = (0,0)
             else:
                 vel = (n[0]-parent[0],n[1]-parent[1]) #atribuir velocidade ao jogador
