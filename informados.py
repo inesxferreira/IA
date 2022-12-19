@@ -118,14 +118,7 @@ class Informados():
 
             if n == None:
                 print('Caminho não existe!')
-                return None
-            
-            #se o nodo em questão não for filho do parent 
-            if n not in dict.proxPos(lofl, arr, parent, vel):
-                vel = (0,0)
-            else: 
-                vel = (n[0]-parent[0],n[1]-parent[1]) #atribuir velocidade ao jogador
-            #print(vel)
+                return None 
             
             # se o nodo corrente é o destino
             if n == fim:  # if n in fim
@@ -148,13 +141,21 @@ class Informados():
                 # retorna caminho, custo
                 return (reconstCam, self.calculaCusto(lofl, reconstCam))
 
+
+            #se o nodo em questão não for filho do parent
+            if n not in dict.proxPos(lofl, arr, parent, vel):
+                vel = (0,0)
+            else:
+                vel = (n[0]-parent[0],n[1]-parent[1]) #atribuir velocidade ao jogador
+            
+
             # todas as posições seguintes possíveis do nodo atual
             for m in dict.proxPos(lofl, arr, n, vel):                
                 # Se o nodo corrente nao esta na open nem na closed list e marcar o antecessor
                 if (m[0] not in closed_list):
-                    newvel = (m[0][0] - n[0], m[0][1] - n[1])
-                    print("newvel=",newvel)
-                    print(self.validaSalto(grafo,n,m[0],newvel))
+                    #newvel = (m[0][0] - n[0], m[0][1] - n[1])
+                    #print("newvel=",newvel)
+                    #print(self.validaSalto(grafo,n,m[0],newvel))
                     open_list.add(m[0])
                     listPercorrido.append(m[0])
                     #parents[m[0]] = n
