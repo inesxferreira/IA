@@ -41,13 +41,8 @@ def main():
     dict= Dictionary()
 
     circuitos=[arr,arr1,arr2,arr3]
-    njog=0
-    j=1
+    
 
-    printDFS=0
-    printBFS=0
-    printGreedy=0
-    printA=0
 
     while c != 0:
         print ("########## BEM VINDO AO VECTOR RACE  ##########")
@@ -58,90 +53,108 @@ def main():
         print("3 -> Circuito 3 ")
         print("4 -> Circuito 4 ")
         print("0 -> Sair")
-        print ("###############################################")
+        print ("#####################################")
         c = int(input("Indique a opção pretendida-> "))
-        print("    ")
         if c != 0:
             saida2= -1
-            print("###### SELECIONOU O CIRCUITO ",c," ######" )
-            njog = int(input(print("Indique o número de jogadores-> ")))
+            opcao = -1
             
-            while saida2 !=0 and j<=njog: 
-                    print("    ")
-                    print("######  MENU JOGADOR ",j," ######" )
-                    print("1 -> Gerar o Circuito ")
-                    print("2 -> Representar a pista em forma de grafo")
+            while saida2 != 0 and opcao != 0:
+                print("    ")
+                print("###### MENU CIRCUITO ",c," ######" )
+                print("1 -> Gerar o Circuito ")
+                print("2 -> Representar a pista em forma de grafo")
+                print("3 -> Ambiente Competitivo")
+                print("0 -> Voltar atrás")
+                print("#####################################")
+                opcao = int(input("Indique a opção pretendida-> "))
 
-                    if (printDFS == 0): print("3 -> Pesquisa DFS")
-                    else: print(strike("3 -> Pesquisa DFS"))
-                    if (printBFS == 0): print("4 -> Pesquisa BFS")
-                    else:print(strike("4 -> Pesquisa BFS"))
-                    if (printGreedy == 0): print("5 -> Pesquisa Greedy")
-                    else: print(strike("5 -> Pesquisa Greedy"))
-                    if (printA == 0): print("6 -> Pesquisa A*")
-                    else: print(strike("6 -> Pesquisa A*"))
+                if opcao == 1: matriz.imprimeCircuito(circuitos[c-1])
+                if opcao == 2:
+                    l = arestas.getEdges(circuitos[c-1])
+                    [print(i) for i in l]
 
-                    print("0 -> Voltar ao menu")
-                    print("##############################################" )
-                    saida2 = int(input("Introduza a sua opção-> "))
-                    print("    ")
-                    if saida2 == 1:
-                            matriz.imprimeCircuito(circuitos[c-1])
-                    if saida2 == 2:
-                            l= arestas.getEdges(circuitos[c-1])
-                            [print(i) for i in l]   
-                    if saida2 == 3 and printDFS == 0 :
-                            inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
-                            fins = matriz.encontraPosicoesFinais(circuitos[c-1])
-                            grafo = NaoInformados(circuitos[c-1])
-                            path =[]
-                            visited = set()
-                            mylist =[]
-                            for i in fins:
-                                path2 =[]
-                                visited2 = set()
-                                f= grafo.verificaDFSfins(inicio,i,path2,visited2)
-                                mylist.append(f)
-                            menor = 10000
-                            dest =(0,0)
-                            for i in mylist:
-                                if (i[1] < menor): 
-                                    dest = i[0]
-                                    menor = i[1]
-                            caminho =grafo.procura_DFS(inicio,dest,path,visited)
-                            print(caminho)
-                            printDFS = 1
-                    if saida2 == 4 and printBFS == 0:
-                            inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
-                            fins = matriz.encontraPosicoesFinais(circuitos[c-1])
-                            grafo = NaoInformados(circuitos[c-1])
-                            mylist=[]
-                            for i in fins:
-                                f= grafo.verificaBFSfins(inicio,i)
-                                mylist.append(f)
-                            menor = 10000
-                            dest =(0,0)
-                            for i in mylist:
-                                if (i[1] < menor): 
-                                    dest = i[0]
-                                    menor = i[1]
-                            caminho =grafo.procura_BFS(inicio,dest)
-                            print(caminho)
-                            printBFS = 1
-                    if saida2 == 5 and printGreedy == 0: 
-                            inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
-                            grafo = dict.makeGrafo(circuitos[c-1], inicio)
-                            fins = matriz.encontraPosicoesFinais(circuitos[c-1])
-                            inf = Informados()
-                            
-                            greedy = inf.greedy(dict, grafo, circuitos[c-1], inicio, fins[0])
-                            #print(greedy)
-                            printGreedy = 1
+                njog = 0
+                j = 1
 
-                    j=j+1
-            print("A sair ...")
-            saida2=0
-            c=0
+                if opcao == 3:
+                    njog = int(input("Indique o número de jogadores (entre 1 e 4)-> "))
+                
+                printDFS = 0
+                printBFS = 0
+                printGreedy = 0
+                printA = 0
+                       
+                while j<=njog and njog<=4: 
+                        print("   ")
+                        print("###### MENU JOGADOR ",j," ######" )
+                        print("###### Selecione entre os algoritmos disponíveis ######")
+                        if (printDFS == 0): print("1 -> Pesquisa DFS")
+                        else: print(strike("1 -> Pesquisa DFS"))
+                        if (printBFS == 0): print("2 -> Pesquisa BFS")
+                        else:print(strike("2 -> Pesquisa BFS"))
+                        if (printGreedy == 0): print("3 -> Pesquisa Greedy")
+                        else: print(strike("3 -> Pesquisa Greedy"))
+                        if (printA == 0): print("4 -> Pesquisa A*")
+                        else: print(strike("4 -> Pesquisa A*"))
+
+                        print("0 -> Reiniciar")
+                        print("##############################################" )
+                        saida2 = int(input("Introduza a sua opção-> "))
+                        print("    ")
+                        if saida2 == 0: break
+                        if saida2 == 1 and printDFS == 0 :
+                                inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
+                                fins = matriz.encontraPosicoesFinais(circuitos[c-1])
+                                grafo = NaoInformados(circuitos[c-1])
+                                path =[]
+                                visited = set()
+                                mylist =[]
+                                for i in fins:
+                                    path2 =[]
+                                    visited2 = set()
+                                    f= grafo.verificaDFSfins(inicio,i,path2,visited2)
+                                    mylist.append(f)
+                                menor = 10000
+                                dest =(0,0)
+                                for i in mylist:
+                                    if (i[1] < menor): 
+                                        dest = i[0]
+                                        menor = i[1]
+                                caminho =grafo.procura_DFS(inicio,dest,path,visited)
+                                printDFS = 1
+                        if saida2 == 2 and printBFS == 0:
+                                inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
+                                fins = matriz.encontraPosicoesFinais(circuitos[c-1])
+                                grafo = NaoInformados(circuitos[c-1])
+                                mylist=[]
+                                for i in fins:
+                                    f= grafo.verificaBFSfins(inicio,i)
+                                    mylist.append(f)
+                                menor = 10000
+                                dest =(0,0)
+                                for i in mylist:
+                                    if (i[1] < menor):
+                                        dest = i[0]
+                                        menor = i[1]
+                                caminho =grafo.procura_BFS(inicio,dest)
+                                printBFS = 1
+                        if saida2 == 3 and printGreedy == 0: 
+                                inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
+                                grafo = dict.makeGrafo(circuitos[c-1], inicio)
+                                fins = matriz.encontraPosicoesFinais(circuitos[c-1])
+                                inf = Informados()
+                                
+                                greedy = inf.greedy(dict, grafo, circuitos[c-1], inicio, fins[0])
+                                printGreedy = 1
+                        j = j+1
+
+                
+
+            saida2=-1
+            c=-1
+        print("A sair ...")
+
 
 if __name__ == "__main__":
     main() 

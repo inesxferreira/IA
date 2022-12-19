@@ -54,6 +54,7 @@ class NaoInformados():
             custoT = self.calcula_custo(path)
             #return (path, custoT)
             print ("A procura DFS entre a posição inicial e final é:",path,"com o custo",custoT)
+            print(" ")
             print ("Sendo que o caminho percorrido foi:", visited)
             #visited=set()
         for (adjacente, peso) in self.m_graph[start]:
@@ -138,5 +139,6 @@ class NaoInformados():
             path.reverse()
             custo = self.calcula_custo(path)
         print ("A procura BFS entre a posição inicial e final é:",path,"com custo",custo)
+        print(" ")
         print ("Sendo que o caminho percorrido foi:", visited)
         #return (path, custo)
