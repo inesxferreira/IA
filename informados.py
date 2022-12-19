@@ -245,9 +245,14 @@ class Informados():
                 reconst_path.append(inicio)
 
                 reconst_path.reverse()
-
+                
+                print("A procura A* entre a posição inicial e final é:",
+                      reconst_path, "com custo", self.calculaCusto(lofl, reconst_path))
+                print(" ")
+                print ("Sendo que os nodos percorridos foram " + str(listPercorrido))
+                
                 #print('Path found: {}'.format(reconst_path))
-                return (reconst_path, self.calcula_custo(lofl, reconst_path))
+                return (reconst_path, self.calculaCusto(lofl, reconst_path))
 
 
             #se o nodo em questão não for filho do parent
@@ -264,6 +269,7 @@ class Informados():
                     open_list.add(m)
                     parents[m] = n
                     g[m] = g[n] + cost
+                    listPercorrido.append(m)
 
                 # otherwise, check if it's quicker to first visit n, then m
                 # and if it is, update parent data and g data
