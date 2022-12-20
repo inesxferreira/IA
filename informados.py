@@ -127,12 +127,14 @@ class Informados():
         lP=[]
 
         for fim in fins: 
-            (caminho, custo,listaP) = self.greedy(dict,grafo,arr,inicio,fim)
+            res = self.greedy(dict,grafo,arr,inicio,fim)
             # se o custo do caminho atual for menor que o custo calculado até agora
-            if custo < m:
-                cam = caminho
-                lP = listaP
-                m = custo
+            if res != None:
+                if res[1] < m:
+                    cam = res[0]
+                    m = res[1]
+                    lP = res[2]
+                    
 
         print("A procura Greedy entre a posição inicial e final é:", cam, "com custo", m)
         print(" ")
@@ -239,12 +241,13 @@ class Informados():
         cam=[]
         lP=[]
         for fim in fins: 
-            (caminho, custo,listaP) = self.aStar(dict,grafo,arr,inicio,fim)
-            # se o custo do caminho atual for menor que o custo calculado até agora
-            if custo < m:
-                cam = caminho
-                lP = listaP
-                m = custo
+            res = self.aStar(dict,grafo,arr,inicio,fim)
+            if res != None:
+                # se o custo do caminho atual for menor que o custo calculado até agora
+                if res[1] < m:
+                    cam = res[0]
+                    m = res[1]
+                    lP = res[2]
 
         print("A procura A* entre a posição inicial e final é:", cam, "com custo", m)
         print(" ")

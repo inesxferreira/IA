@@ -140,19 +140,15 @@ class Matriz():
     def movePlayer(self,matrix,oldpos,newpos):
         newmatrix = matrix
         matrix[oldpos[0]][oldpos[1]] = '-'
-        matrix[newpos[0]][newpos[1]] = 'P'
+        matrix[newpos[0]][newpos[1]] = '{}P{}'.format("\033[1;36m", '\033[m') #mudar cor de P 
         return newmatrix
     
     # demonstra no ecrã o caminho percorrido por um jogador
     def playPath(self, matrix,start,path):
         for move in path:
             os.system('cls' if os.name == 'nt' else 'clear')
-            if move != start:
-                newmatrix = self.movePlayer(matrix, start,move)
-                self.printMatrix(newmatrix)
-                start = move
-                input("Enter para continuar...")
-            else: 
-                self.printMatrix(matrix)
-                input("Enter para continuar...")
-                
+            newmatrix = self.movePlayer(matrix, start,move)
+            self.printMatrix(newmatrix)
+            start = move
+            input("Enter para continuar...")
+            
