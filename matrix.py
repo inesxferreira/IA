@@ -127,6 +127,7 @@ class Matriz():
             newIntegersPositions.append(int(newf))
         return newIntegersPositions
     
+    # imprime no ecrã o circuito
     def printMatrix(self, matrix):
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
@@ -135,12 +136,14 @@ class Matriz():
                 sys.stdout.flush()
             sys.stdout.write('\n')
     
+    # altera a posição do jogador na pista
     def movePlayer(self,matrix,oldpos,newpos):
         newmatrix = matrix
         matrix[oldpos[0]][oldpos[1]] = '-'
         matrix[newpos[0]][newpos[1]] = 'P'
         return newmatrix
     
+    # demonstra no ecrã o caminho percorrido por um jogador
     def playPath(self, matrix,start,path):
         for move in path:
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -148,5 +151,8 @@ class Matriz():
                 newmatrix = self.movePlayer(matrix, start,move)
                 self.printMatrix(newmatrix)
                 start = move
-                time.sleep(1)
+                input("Enter para continuar...")
+            else: 
+                self.printMatrix(matrix)
+                input("Enter para continuar...")
                 

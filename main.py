@@ -110,6 +110,10 @@ def main():
                                     dest = i[0]
                                     menor = i[1]
                             caminho =grafo.procura_DFS(inicio,dest,path,visited)
+                            
+                            input("Enter para visualizar o percurso...")
+                            matriz.playPath(dict.listaToM(circuitos[c-1]), caminho[0][0],caminho[0])
+                            
                             printDFS = 1
                     if saida2 == 4 and printBFS == 0:
                             inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
@@ -125,7 +129,11 @@ def main():
                                 if (i[1] < menor): 
                                     dest = i[0]
                                     menor = i[1]
-                            caminho =grafo.procura_BFS(inicio,dest)
+                            caminho = grafo.procura_BFS(inicio,dest)
+                            
+                            input("Enter para visualizar o percurso...")
+                            matriz.playPath(dict.listaToM(circuitos[c-1]), caminho[0][0],caminho[0])
+                            
                             printBFS = 1
                     if saida2 == 5 and printGreedy == 0: 
                             inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
@@ -137,8 +145,8 @@ def main():
                             # para cada posição final, verifica qual tem menor custo e devolve esse mesmo caminho
                             menorGreedy = inf.mGreedy(dict, grafo, circuitos[c-1], inicio, fins)
                             #greedy = inf.greedy(dict, grafo, circuitos[c-1], inicio, fins[0])
-                            
-                            matriz.playPath(dict.listaToM(arr), menorGreedy[0][0], menorGreedy[0])
+                            input("Enter para visualizar o percurso...")
+                            matriz.playPath(dict.listaToM(circuitos[c-1]), menorGreedy[0][0], menorGreedy[0])
                             
                             printGreedy = 1
 
@@ -149,9 +157,9 @@ def main():
                             inf = Informados()
 
                             menorAStar = inf.mAStar(dict, grafo, circuitos[c-1], inicio, fins)
-                            time.sleep(2)
+                            input("Enter para visualizar o percurso...")
                             
-                            matriz.playPath(dict.listaToM(arr), menorAStar[0][0], menorAStar[0])
+                            matriz.playPath(dict.listaToM(circuitos[c-1]), menorAStar[0][0], menorAStar[0])
                             #aStar = inf.aStar(dict, grafo, circuitos[c-1], inicio, fins[0])
                             printA = 1
 

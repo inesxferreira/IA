@@ -52,11 +52,11 @@ class NaoInformados():
         visited.add(start)
         if start == end:
             custoT = self.calcula_custo(path)
-            #return (path, custoT)
             print ("A procura DFS entre a posição inicial e final é:",path,"com o custo",custoT)
             print(" ")
             print ("Sendo que o caminho percorrido foi:", visited)
             #visited=set()
+            return (path, custoT)
         for (adjacente, peso) in self.m_graph[start]:
                 if (peso == 25 and adjacente not in visited): #parede - tem de voltar para trás
                         visited.add(adjacente) #adiciona na mesma à lista de visitados
@@ -141,4 +141,4 @@ class NaoInformados():
         print ("A procura BFS entre a posição inicial e final é:",path,"com custo",custo)
         print(" ")
         print ("Sendo que o caminho percorrido foi:", visited)
-        #return (path, custo)
+        return (path, custo)
