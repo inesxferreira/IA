@@ -124,6 +124,9 @@ def main():
                                 dest = i[0]
                                 menor = i[1]
                         caminho = grafo.procura_DFS(inicio, dest, path, visited)
+                        
+                        input("Enter para continuar...")
+                        matriz.playPath(dict.listaToM(circuitos[c-1]),caminho[0][0], caminho[0])
                         printDFS = 1
 
                     if saida2 == 2 and printBFS == 0:
@@ -141,6 +144,9 @@ def main():
                                 dest = i[0]
                                 menor = i[1]
                         caminho = grafo.procura_BFS(inicio, dest)
+                        input("Enter para continuar...")
+                        matriz.playPath(dict.listaToM(circuitos[c-1]),caminho[0][0], caminho[0])
+                        
                         printBFS = 1
 
                     if saida2 == 3 and printGreedy == 0:
@@ -149,7 +155,10 @@ def main():
                         fins = matriz.encontraPosicoesFinais(circuitos[c-1])
                         inf = Informados()
 
-                        greedy = inf.mGreedy(dict, grafo, circuitos[c-1], inicio, fins[0])
+                        greedy = inf.mGreedy(dict, grafo, circuitos[c-1], inicio, fins)
+                        input("Enter para continuar...")
+                        matriz.playPath(dict.listaToM(circuitos[c-1]),greedy[0][0], greedy[0])
+                        
                         printGreedy = 1
                     
                     if saida2 == 4 and printA == 0:
@@ -158,7 +167,10 @@ def main():
                         fins = matriz.encontraPosicoesFinais(circuitos[c-1])
                         inf = Informados()
 
-                        aStar = inf.mAStar(dict, grafo, circuitos[c-1], inicio, fins[0])
+                        aStar = inf.mAStar(dict, grafo, circuitos[c-1], inicio, fins)
+                        input("Enter para continuar...")
+                        matriz.playPath(dict.listaToM(circuitos[c-1]),aStar[0][0], aStar[0])
+                        
                         printA = 1
                     j = j+1
 
