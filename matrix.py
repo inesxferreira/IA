@@ -1,5 +1,7 @@
 import queue
-
+import sys
+import time
+import os
 
 class Matriz():
     # função que imprime o circuito no terminal
@@ -124,3 +126,27 @@ class Matriz():
             newf = fl+fc
             newIntegersPositions.append(int(newf))
         return newIntegersPositions
+    
+    def printMatrix(self, matrix):
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                sys.stdout.write(matrix[i][j])
+                sys.stdout.write(' ')
+                sys.stdout.flush()
+            sys.stdout.write('\n')
+    
+    def movePlayer(self,matrix,oldpos,newpos):
+        newmatrix = matrix
+        matrix[oldpos[0]][oldpos[1]] = '-'
+        matrix[newpos[0]][newpos[1]] = 'P'
+        return newmatrix
+    
+    def playPath(self, matrix,start,path):
+        for move in path:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            if move != start:
+                newmatrix = self.movePlayer(matrix, start,move)
+                self.printMatrix(newmatrix)
+                start = move
+                time.sleep(1)
+                

@@ -3,7 +3,7 @@ from arestas import Arestas
 from dictionary import Dictionary
 from naoInformados import NaoInformados
 from informados import Informados
-
+import time
 
 def strike(text):
     return ''.join([u'\u0336{}'.format(c) for c in text])
@@ -43,7 +43,8 @@ def main():
     circuitos=[arr,arr1,arr2,arr3]
     njog=0
     j=1
-
+    
+    # flags para saber se o algoritmo já foi escolhido ou não
     printDFS=0
     printBFS=0
     printGreedy=0
@@ -130,9 +131,15 @@ def main():
                             inicio = matriz.encontraPosicaoInicial(circuitos[c-1])
                             grafo = dict.makeGrafo(circuitos[c-1], inicio)
                             fins = matriz.encontraPosicoesFinais(circuitos[c-1])
+
                             inf = Informados()
+
+                            # para cada posição final, verifica qual tem menor custo e devolve esse mesmo caminho
+                            menorGreedy = inf.mGreedy(dict, grafo, circuitos[c-1], inicio, fins)
+                            #greedy = inf.greedy(dict, grafo, circuitos[c-1], inicio, fins[0])
                             
-                            greedy = inf.greedy(dict, grafo, circuitos[c-1], inicio, fins[0])
+                            matriz.playPath(dict.listaToM(arr), menorGreedy[0][0], menorGreedy[0])
+                            
                             printGreedy = 1
 
                     if saida2 == 6 and printA == 0: 
@@ -140,8 +147,12 @@ def main():
                             grafo = dict.makeGrafo(circuitos[c-1], inicio)
                             fins = matriz.encontraPosicoesFinais(circuitos[c-1])
                             inf = Informados()
+
+                            menorAStar = inf.mAStar(dict, grafo, circuitos[c-1], inicio, fins)
+                            time.sleep(2)
                             
-                            aStar = inf.aStar(dict, grafo, circuitos[c-1], inicio, fins[0])
+                            matriz.playPath(dict.listaToM(arr), menorAStar[0][0], menorAStar[0])
+                            #aStar = inf.aStar(dict, grafo, circuitos[c-1], inicio, fins[0])
                             printA = 1
 
 

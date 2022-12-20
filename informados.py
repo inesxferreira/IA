@@ -43,7 +43,34 @@ class Informados():
 
     # verifica se o salto entre duas posições é possível, se tiver paredes pelo meio dá uma alternativa
     def validaSalto (self,grafo,pI,pF,vel):
-        #validar o caminho entre pI e pF
+        div = max(abs(vel[0]), abs(vel[1]))
+        
+        inc = (float(vel[0]//div),float(vel[1]//div))
+        pos = pI
+        
+        i = 0
+        while i < div:
+            newpos = (float(pos[0] + inc[0]),float(pos[1] + inc[1]))
+
+            newposint = (int(newpos[0]),int(newpos[1]))
+
+            graphadjs = grafo[pos][0]
+            
+            #print("pos=",pos)
+            #print("newposint=",newposint)
+            #print(graphadjs)
+            
+            for (v,cost) in graphadjs:
+                if newposint == v and cost == 25:
+                    return pos
+                if newposint == v and cost == 1:
+                    pos = newposint
+            #print("nextiterpos=", pos)
+            #print(" ")
+            i = i+1
+        return pos
+        
+        """#validar o caminho entre pI e pF
         #posição inicial
         parent = pI
         currposx = 0
@@ -83,15 +110,36 @@ class Informados():
                 parent = currpos
             elif (currpos, 25) in currset:
                 return parent
-            """for setvalue in currset:
+            for setvalue in currset:
                 #setvalue representado por (posição, custo)
                 if setvalue[0] == currpos and setvalue[1] == 25:
                     return parent
                 if setvalue[0] == currpos and setvalue[1] == 1:
-                    parent = currpos"""
+                    parent = currpos
         #retornar a posição válida
         return pF
+            """
+    # calcular o algoritmo Greedy para as diferentes posições finais
+    def mGreedy (self,dict,grafo,arr,inicio,fins):
+        #fins é a lista de posições finais
+        m = 200
+        cam=[]
+        lP=[]
 
+        for fim in fins: 
+            (caminho, custo,listaP) = self.greedy(dict,grafo,arr,inicio,fim)
+            # se o custo do caminho atual for menor que o custo calculado até agora
+            if custo < m:
+                cam = caminho
+                lP = listaP
+                m = custo
+
+        print("A procura Greedy entre a posição inicial e final é:", cam, "com custo", m)
+        print(" ")
+        print ("Sendo que os nodos percorridos foram ", lP)
+        
+        return (cam,m,lP)
+        
     ##############
     #   Greedy   #
     ##############
@@ -117,13 +165,9 @@ class Informados():
         while len(open_list) > 0:
             n = None
             menor = 1000.0
-            # encontrar nodo com a menor heuristica
-            for i in open_list:
-                """d = self.distanciaEuclidiana(i, fim)
 
-                if (d <= menor):  # guardar o valor com a menor distancia ao fim
-                    menor = d
-                    n = i"""
+            for i in open_list:
+                # encontrar nodo com a menor heuristica
                 if heuristicas[i] <= menor:
                     menor = heuristicas[i]
                     n = i
@@ -146,13 +190,10 @@ class Informados():
                 reconstCam.append(inicio)
                 reconstCam.reverse()
 
-                print("A procura Greedy entre a posição inicial e final é:",
-                      reconstCam, "com custo", self.calculaCusto(lofl, reconstCam))
-                print(" ")
-                print ("Sendo que os nodos percorridos foram " + str(listPercorrido))
+
 
                 # retorna caminho, custo
-                return (reconstCam, self.calculaCusto(lofl, reconstCam))
+                return (reconstCam, self.calculaCusto(lofl, reconstCam),listPercorrido)
 
 
             #se o nodo em questão não for filho do parent
@@ -164,11 +205,14 @@ class Informados():
 
             # todas as posições seguintes possíveis do nodo atual
             for (m,cost) in dict.proxPos(lofl, arr, n, vel):                
+                newvel = (m[0]-n[0],m[1]-n[1])
+                newpos = self.validaSalto(grafo,n,m,newvel)
                 # Se o nodo corrente nao esta na open nem na closed list e marcar o antecessor
-                if m not in closed_list and m not in open_list:
-                    open_list.add(m)
-                    listPercorrido.append(m)
-                    parents[m] = n
+                if newpos not in closed_list and newpos not in open_list:
+                    #print(newpos)
+                    open_list.add(newpos)
+                    listPercorrido.append(newpos)
+                    parents[newpos] = n
             
             # adicionar à closed_list todos os seus vizinhos foram inspecionados
             open_list.remove(n)
@@ -188,6 +232,26 @@ class Informados():
                 node = k
         return node
 
+    # calcular o algoritmo A* para as diferentes posições finais
+    def mAStar (self,dict,grafo,arr,inicio,fins):
+        #fins é a lista de posições finais
+        m = 200
+        cam=[]
+        lP=[]
+        for fim in fins: 
+            (caminho, custo,listaP) = self.aStar(dict,grafo,arr,inicio,fim)
+            # se o custo do caminho atual for menor que o custo calculado até agora
+            if custo < m:
+                cam = caminho
+                lP = listaP
+                m = custo
+
+        print("A procura A* entre a posição inicial e final é:", cam, "com custo", m)
+        print(" ")
+        print ("Sendo que os nodos percorridos foram ", lP)
+        
+        return (cam,m,lP)
+
     ##############
     #     A*     #
     ##############
@@ -196,9 +260,8 @@ class Informados():
         open_list = {inicio}
         closed_list = set([])
 
-        # g contains current distances from start_node to all other nodes
-        # the default value (if it's not found in the map) is +infinity
-        g = {}  ##  g é apra substiruir pelo peso  ???
+        # guarda o custo entre a posição inicial e a posição atual
+        g = {}  
 
         g[inicio] = 0
 
@@ -217,7 +280,7 @@ class Informados():
         
         n = None
         while len(open_list) > 0:
-            # find a node with the lowest value of f() - evaluation function
+            # procurar o nodo com menor valor
             calc_heurist = {}
             flag = 0
             for v in open_list:
@@ -225,66 +288,59 @@ class Informados():
                     n = v
                 else:
                     flag = 1
+                    #calcular a heurística ( = custo acumulado  valor de heurísticas calculado)
                     calc_heurist[v] = g[v] + heuristicas[v]
-            if flag == 1:
+            
+            if flag == 1: #se o nodo já foi visitado e já foi calculada a sua heurística
+                #atualizar com o nodo com menor valor de heurística
                 min_estima = self.calcula_estima(calc_heurist)
                 n = min_estima
             if n == None:
                 print('Caminho não existe!')
                 return None
 
-            # if the current node is the stop_node
-            # then we begin reconstructin the path from it to the start_node
+            # se o nodo atual já foi o nodo final, reconstruir caminho
             if n == fim:
-                reconst_path = []
+                reconstCam = []
 
                 while parents[n] != n:
-                    reconst_path.append(n)
+                    reconstCam.append(n)
                     n = parents[n]
 
-                reconst_path.append(inicio)
+                reconstCam.append(inicio)
 
-                reconst_path.reverse()
+                reconstCam.reverse()
                 
-                print("A procura A* entre a posição inicial e final é:",
-                      reconst_path, "com custo", self.calculaCusto(lofl, reconst_path))
-                print(" ")
-                print ("Sendo que os nodos percorridos foram " + str(listPercorrido))
-                
-                #print('Path found: {}'.format(reconst_path))
-                return (reconst_path, self.calculaCusto(lofl, reconst_path))
+                #print('Path found: {}'.format(reconstCam))
+                return (reconstCam, self.calculaCusto(lofl, reconstCam), listPercorrido)
 
 
-            #se o nodo em questão não for filho do parent
+            # se o nodo (pista ou parede) em questão não for filho do parent
             if (n,1) not in dict.proxPos(lofl, arr, parents[n], vel) and (n,25) not in dict.proxPos(lofl, arr, parents[n], vel):
                 vel = (0,0)
             else:
                 vel = (n[0]-parents[n][0],n[1]-parents[n][1]) #atribuir velocidade ao jogador
             
-            # for all neighbors of the current node do
-            for (m,cost) in dict.proxPos(lofl, arr, n, vel):   # definir função getneighbours  tem de ter um par nodo peso
-                # if the current node isn't in both open_list and closed_list
-                # add it to open_list and note n as it's parent
+            # para todos os seus nodos vizinhos
+            for (m,cost) in dict.proxPos(lofl, arr, n, vel):  
+                # se não estiver nem na open e closed, adicionar à open e n é parent de m
                 if m not in open_list and m not in closed_list:
                     open_list.add(m)
                     parents[m] = n
                     g[m] = g[n] + cost
                     listPercorrido.append(m)
 
-                # otherwise, check if it's quicker to first visit n, then m
-                # and if it is, update parent data and g data
-                # and if the node was in the closed_list, move it to open_list
                 else:
+                    # verificar se é mais rápido visitar n e só depois m
                     if g[m] > g[n] + cost:
-                        g[m] = g[n] + cost
-                        parents[m] = n
+                        g[m] = g[n] + cost #atualizar dicionário g
+                        parents[m] = n #atualizar lista de parents
 
                         if m in closed_list:
                             closed_list.remove(m)
                             open_list.add(m)
 
-            # remove n from the open_list, and add it to closed_list
-            # because all of his neighbors were inspected
+            # remover da open e adicionar à closed porque todos os nodos adjacentes foram visitados
             open_list.remove(n)
             closed_list.add(n)
 

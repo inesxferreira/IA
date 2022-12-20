@@ -83,7 +83,7 @@ class Dictionary():
                 # prox devolve a posição e o custo respetivo
                 prox = self.proxPos(lofl, arr, pos, (0, 0))
                 for each in prox:
-                    if each[1] == 1:
+                    #if each[1] == 1:
                         naoVisitado.append(each[0])
 
                 # adiciona pos como chave e filhos ao grafo
